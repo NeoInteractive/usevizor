@@ -32,12 +32,12 @@
           />
           Login
         </button>
-        <h5 class="mr-1">
+        <!-- <h5 class="mr-1">
           Don't have an account?
           <router-link :to="{ name: 'SignUp' }" class="text-primary"
             >Sign Up
           </router-link>
-        </h5>
+        </h5> -->
       </div>
       <h5 class="mt-5 text-error">
         <router-link :to="{ name: 'ForgotPassword' }"
