@@ -15,7 +15,7 @@ const routes = [
   {
     path: "/beta/registered",
     name: "BetaRegistered",
-    component: () => import("@/views/BetaRegistered.vue"),
+    component: () => import("@/views/auth/BetaRegistered.vue"),
   },
   {
     path: "/profile",
@@ -26,31 +26,31 @@ const routes = [
   {
     path: "/auth/login",
     name: "Login",
-    component: () => import("@/views/Login.vue"),
+    component: () => import("@/views/auth/Login.vue"),
     meta: { noAuth: true },
   },
   {
     path: "/auth/signup",
     name: "SignUp",
-    component: () => import("@/views/SignUp.vue"),
+    component: () => import("@/views/auth/SignUp.vue"),
     meta: { noAuth: true },
   },
   {
     path: "/auth/forgot-password",
     name: "ForgotPassword",
-    component: () => import("@/views/ForgotPassword.vue"),
+    component: () => import("@/views/auth/ForgotPassword.vue"),
     meta: { noAuth: true },
   },
   {
-    path: "/database",
-    name: "Database",
-    component: () => import("@/views/Database.vue"),
+    path: "/dashboard",
+    name: "Dashboard",
+    component: () => import("@/views/Dashboard.vue"),
     meta: { requiresAuth: true },
   },
   {
     path: "/:pathMatch(.*)*",
     name: "NotFound",
-    component: () => import("@/views/404.vue"),
+    component: () => import("@/views/error/404.vue"),
   },
 ];
 

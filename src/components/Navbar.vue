@@ -15,12 +15,12 @@
           :to="{ name: 'Profile' }"
           class="nav-link t-transition-effect"
         >
-          Profile
+          Account
         </router-link>
         <router-link
-          :to="{ name: 'Database' }"
+          :to="{ name: 'Dashboard' }"
           class="nav-link t-transition-effect"
-          >Database
+          >Dashboard
         </router-link>
         <a
           class="t-transition-effect py-2 px-4 ml-4 font-heading rounded cursor-pointer bg-error hover:bg-opacity-75"

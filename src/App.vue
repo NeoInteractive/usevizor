@@ -8,13 +8,11 @@
   </div>
   <div id="app-container" v-else class="flex flex-col min-h-screen">
     <Navbar />
-    <div class="t-main-set flex-1 grid place-items-center">
-      <router-view v-slot="{ Component, route }">
-        <transition name="slide" mode="out-in">
-          <component :is="Component" :key="route.path" />
-        </transition>
-      </router-view>
-    </div>
+    <router-view class="h-screen" v-slot="{ Component, route }">
+      <transition name="slide" mode="out-in">
+        <component :is="Component" :key="route.path" />
+      </transition>
+    </router-view>
     <Footer />
   </div>
 </template>

@@ -25,7 +25,7 @@
             leave-to="opacity-0 scale-90"
           >
             <div
-              class="inline-block w-full max-w-md p-6 overflow-hidden text-left align-middle transition-all transform shadow-xl rounded-2xl"
+              class="bg-gray-925 inline-block w-full max-w-md p-6 overflow-hidden text-left align-middle transition-all transform shadow-xl rounded border-2 border-indigo-400"
             >
               <DialogTitle as="h2">
                 {{ title }}
