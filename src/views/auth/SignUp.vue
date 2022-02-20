@@ -65,7 +65,11 @@
         </p>
       </div>
       <div class="flex justify-between items-center">
-        <button type="submit" class="t-btn inline-flex items-center bg-primary">
+        <button
+          type="submit"
+          class="t-btn inline-flex items-center bg-primary"
+          disabled
+        >
           <Loading class="h-5 w-5" v-if="loading" />
           <font-awesome-icon :icon="['fas', 'user-plus']" class="mr-2" v-else />
           Sign Up

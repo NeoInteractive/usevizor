@@ -12,7 +12,7 @@
           >Home
         </router-link>
         <router-link
-          :to="{ name: 'Profile' }"
+          :to="{ name: 'Account' }"
           class="nav-link t-transition-effect"
         >
           Account

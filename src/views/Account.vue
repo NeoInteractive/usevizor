@@ -32,6 +32,11 @@ const { user } = useAuthState();
             >
               <i class="fa-solid fa-code mr-2"></i>Developer Tools
             </p>
+            <p
+              class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer"
+            >
+              <i class="fa-solid fa-info-circle mr-2"></i>About
+            </p>
           </div>
         </div>
         <div v-if="user" class="w-full p-4">
