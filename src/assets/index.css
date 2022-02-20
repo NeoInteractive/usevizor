@@ -25,7 +25,8 @@
 }
 
 body {
-  @apply bg-secondary text-white font-text;
+  background: #07091b;
+  @apply text-white font-text;
 }
 
 /* Pre configured class */
