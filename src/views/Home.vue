@@ -1,7 +1,22 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { isValidEmail } from "../helpers";
+import axios from "axios";
 let email = ref("");
+
+const submitForm = async () => {
+  await axios
+    .post("https://submit-form.com/E4wnaOxe", {
+      email: email.value,
+    })
+    .then(() => {
+      window.location.replace("/beta/registered");
+      email.value = "";
+    })
+    .catch(() => {
+      alert("Oops! There was a problem submitting your form");
+    });
+};
 </script>
 <template>
   <section
@@ -12,7 +27,7 @@ let email = ref("");
       Add a scoreboard to your tournament in 3 minutes.
     </h1>
     <p class="text-xl font-light mb-6">
-      VIZOR is a fully dymanic scoreboard that offers tournament admins
+      VIZOR is a fully dynamic scoreboard that offers tournament admins
       easy-to-use and customizable scoreboard overlays, with the ability to
       control from a Web Browser, OBS Dock, or our Stream Deck Plugins.
     </p>
@@ -20,7 +35,7 @@ let email = ref("");
       We’re currently in Closed Beta. If you’re interested in joining the beta,
       register for access below and we'll send you an email when you're in.
     </p>
-    <form action="https://formsubmit.co/beta@usevizor.com" method="POST">
+    <form @submit.prevent="submitForm">
       <input
         type="hidden"
         name="_webhook"
