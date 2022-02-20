@@ -1,5 +1,5 @@
 <template>
-  <section class="bg-secondary p-4">
+  <section class="p-4">
     <div>
       <h1 class="my-2">Write to Firestore.</h1>
       <div>
@@ -59,5 +59,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

@@ -86,7 +86,6 @@ export default defineComponent({
   backdrop-filter backdrop-blur-sm;
 }
 .nav-link {
-  @apply py-2 px-4 ml-2 font-heading rounded text-indigo-100
-  hover:bg-secondary;
+  @apply py-2 px-4 ml-2 font-heading rounded text-indigo-100;
 }
 </style>

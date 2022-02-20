@@ -10,7 +10,6 @@ module.exports = {
       },
       colors: {
         primary: colors.indigo["500"],
-        secondary: colors.gray["925"],
         error: colors.red["500"],
         gray: {
           925: "#07091B",
