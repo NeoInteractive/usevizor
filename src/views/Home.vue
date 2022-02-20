@@ -2,20 +2,28 @@
 import { ref } from "vue";
 import { isValidEmail } from "../helpers";
 import axios from "axios";
+import Botpoison from "@botpoison/browser";
 let email = ref("");
-
+let loading = ref(false);
+const poison = new Botpoison({
+  publicKey: "pk_5bbce72f-525d-4a56-b386-75b7fe7fedda",
+});
 const submitForm = async () => {
-  await axios
-    .post("https://submit-form.com/E4wnaOxe", {
+  loading.value = true;
+  try {
+    const { solution } = await poison.challenge();
+    await axios.post("https://submit-form.com/E4wnaOxe", {
       email: email.value,
-    })
-    .then(() => {
-      window.location.replace("/beta/registered");
-      email.value = "";
-    })
-    .catch(() => {
-      alert("Oops! There was a problem submitting your form");
+      _botpoison: solution,
     });
+    email.value = "";
+    window.location.replace("/beta/registered");
+  } catch (error) {
+    email.value = "";
+    alert("Oops! There was a problem submitting your form");
+  } finally {
+    loading.value = false;
+  }
 };
 </script>
 <template>
@@ -59,7 +67,8 @@ const submitForm = async () => {
           type="submit"
           :disabled="!isValidEmail(email)"
         >
-          Register
+          <i v-if="loading" class="fa-solid fa-spinner fa-spin"></i>
+          <span v-else>Register</span>
         </button>
       </div>
     </form>

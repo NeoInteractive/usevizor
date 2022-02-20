@@ -24,6 +24,7 @@
   }
 }
 
+html,
 body {
   background: #07091b;
   @apply text-white font-text;
