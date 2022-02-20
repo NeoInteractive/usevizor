@@ -1,11 +1,26 @@
-export default {
-  plugins: [],
+// tailwind.config.js
+const colors = require("tailwindcss/colors");
+module.exports = {
+  content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        heading: ["Space Grotesk", "sans-serif"],
+        text: ["Space Grotesk", "sans-serif"],
+      },
+      colors: {
+        primary: colors.indigo["500"],
+        secondary: colors.gray["925"],
+        error: colors.red["500"],
+        gray: {
+          925: "#07091B",
+          950: "#010315",
+        },
+      },
+    },
   },
-  purge: ["./index.html", "./src/**/*.{svelte,js,ts}"], // for unused CSS
   variants: {
     extend: {},
   },
-  darkMode: false, // or 'media' or 'class'
+  plugins: [],
 };

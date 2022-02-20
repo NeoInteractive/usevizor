@@ -1,0 +1,63 @@
+<script setup lang="ts">
+import { ref } from "vue";
+import { isValidEmail } from "../helpers";
+let email = ref("");
+</script>
+<template>
+  <section
+    class="p-12 bg-gray-925/25 w-1/2 rounded backdrop-blur-sm border border-gray-925"
+  >
+    <img src="@/assets/logo-long.svg" alt="Vizor Logo" class="w-48 mb-12" />
+    <h1 class="text-4xl mb-6">
+      Add a scoreboard to your tournament in 3 minutes.
+    </h1>
+    <p class="text-xl font-light mb-6">
+      VIZOR is a fully dymanic scoreboard that offers tournament admins
+      easy-to-use and customizable scoreboard overlays, with the ability to
+      control from a Web Browser, OBS Dock, or our Stream Deck Plugins.
+    </p>
+    <p class="text-xl font-light mb-6">
+      We’re currently in Closed Beta. If you’re interested in joining the beta,
+      register for access below and we'll send you an email when you're in.
+    </p>
+    <form action="https://formsubmit.co/beta@usevizor.com" method="POST">
+      <input
+        type="hidden"
+        name="_webhook"
+        value="https://api.usevizor.com/hooks/beta"
+      />
+      <input
+        type="hidden"
+        name="_next"
+        value="https://api.usevizor.com/beta/registered"
+      />
+      <div class="flex mb-2">
+        <input
+          v-model="email"
+          type="email"
+          name="email"
+          class="w-full bg-gray-925 text-white px-2 py-3"
+          placeholder="Email Address"
+        />
+        <button
+          class="py-2 px-4 bg-indigo-500 hover:bg-indigo-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          type="submit"
+          :disabled="!isValidEmail(email)"
+        >
+          Register
+        </button>
+      </div>
+    </form>
+
+    <p class="text-sm">
+      Your email address is safe with us. We take the privacy of our users very
+      seriously, and never sell customer information to anyone.
+    </p>
+  </section>
+</template>
+
+<style lang="postcss" scoped>
+code {
+  @apply bg-gray-800 px-2 mx-2;
+}
+</style>
