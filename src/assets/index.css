@@ -48,7 +48,8 @@ body {
   @apply my-4 md:my-20 w-11/12 md:w-2/3 lg:w-3/5 mx-auto;
 }
 .t-auth-form {
-  @apply bg-secondary shadow-md rounded p-6;
+  background: #07091b;
+  @apply shadow-md rounded p-6;
 }
 /* AUTH */
 
