@@ -48,13 +48,7 @@ const handleSubmit = async (e) => {
           <font-awesome-icon :icon="['fas', 'envelope']" class="mr-1" />
           Email
         </label>
-        <input
-          class="t-input"
-          type="text"
-          id="email"
-          placeholder="Email"
-          value="hello@emk.dev"
-        />
+        <input class="t-input" type="text" id="email" placeholder="Email" />
       </div>
       <div class="mb-4">
         <label class="block text-sm font-bold mb-2" for="password">
@@ -66,7 +60,6 @@ const handleSubmit = async (e) => {
           type="password"
           id="password"
           placeholder="Password"
-          value="Ek206045E$k"
         />
       </div>
       <div class="flex justify-between items-center">
