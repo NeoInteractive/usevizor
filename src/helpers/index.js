@@ -15,3 +15,14 @@ export const getGravatar = (email) => {
   const emailHash = hashMD5(email);
   return `//www.gravatar.com/avatar/${emailHash}?s=200`;
 };
+export const getTeamImage = (team, name) => {
+  switch (team) {
+    case "one":
+      return `https://ui-avatars.com/api/?name=${name}&bold=true&background=141527&color=fff&size=128`;
+    case "two":
+      return `https://ui-avatars.com/api/?name=${name}&bold=true&background=141527&color=fff&size=128`;
+
+    default:
+      break;
+  }
+};

@@ -1,3 +1,43 @@
+<script setup>
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { useRouter } from "vue-router";
+import { ref } from "vue";
+import Loading from "@/components/Loading.vue";
+import { isValidEmail } from "@/helpers";
+import { useStore } from "@/stores/user.store";
+
+const auth = getAuth();
+const router = useRouter();
+const userStore = useStore();
+console.log(userStore.auth_data);
+const loading = ref(false);
+const error = ref("");
+
+const handleSubmit = async (e) => {
+  loading.value = true;
+  const { email, password } = e.target.elements;
+  if (
+    email.value.length > 0 &&
+    password.value.length > 0 &&
+    isValidEmail(email.value)
+  ) {
+    signInWithEmailAndPassword(auth, email.value, password.value)
+      .then((user) => {
+        console.log(user.user);
+        userStore.setAuthData(user.user);
+        router.replace({ name: "Dashboard" });
+      })
+      .catch((error) => {
+        console.log(error);
+        error.value = error.message;
+      });
+  } else {
+    error.value = "Enter valid Email and Password";
+  }
+  loading.value = false;
+};
+</script>
+
 <template>
   <section class="t-auth-section">
     <form @submit.prevent="handleSubmit" class="t-auth-form">
@@ -8,7 +48,13 @@
           <font-awesome-icon :icon="['fas', 'envelope']" class="mr-1" />
           Email
         </label>
-        <input class="t-input" type="text" id="email" placeholder="Email" />
+        <input
+          class="t-input"
+          type="text"
+          id="email"
+          placeholder="Email"
+          value="hello@emk.dev"
+        />
       </div>
       <div class="mb-4">
         <label class="block text-sm font-bold mb-2" for="password">
@@ -20,6 +66,7 @@
           type="password"
           id="password"
           placeholder="Password"
+          value="Ek206045E$k"
         />
       </div>
       <div class="flex justify-between items-center">
@@ -50,64 +97,3 @@
     </form>
   </section>
 </template>
-
-<script>
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  GoogleAuthProvider,
-} from "firebase/auth";
-import { useRouter } from "vue-router";
-import { ref } from "vue";
-import Loading from "@/components/Loading.vue";
-import Dialog from "@/components/Dialog.vue";
-import { isValidEmail } from "@/helpers";
-
-export default {
-  components: {
-    Loading,
-    Dialog,
-  },
-  setup() {
-    const auth = getAuth();
-    const router = useRouter();
-
-    const loading = ref(false);
-    const error = ref("");
-
-    const handleSubmit = async (e) => {
-      loading.value = true;
-      const { email, password } = e.target.elements;
-      if (
-        email.value.length > 0 &&
-        password.value.length > 0 &&
-        isValidEmail(email.value)
-      ) {
-        try {
-          await signInWithEmailAndPassword(auth, email.value, password.value);
-          await router.replace({ name: "Profile" });
-        } catch (e) {
-          error.value = e.message;
-        }
-      } else {
-        error.value = "Enter valid Email and Password";
-      }
-      loading.value = false;
-    };
-
-    const googleSignUp = async () => {
-      const provider = new GoogleAuthProvider();
-      const auth = getAuth();
-      try {
-        const result = await signInWithPopup(auth, provider);
-        GoogleAuthProvider.credentialFromResult(result);
-        router.replace({ name: "Profile" });
-      } catch (e) {
-        error.value = e.message;
-      }
-    };
-    return { handleSubmit, googleSignUp, error, loading };
-  },
-};
-</script>

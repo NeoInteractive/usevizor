@@ -12,12 +12,6 @@
           >Home
         </router-link>
         <router-link
-          :to="{ name: 'Account' }"
-          class="nav-link t-transition-effect"
-        >
-          Account
-        </router-link>
-        <router-link
           :to="{ name: 'Dashboard' }"
           class="nav-link t-transition-effect"
           >Dashboard
@@ -32,23 +26,12 @@
         <router-link :to="{ name: 'Home' }" class="nav-link t-transition-effect"
           >Home
         </router-link>
-        <!-- <router-link
-          :to="{ name: 'Features' }"
-          class="nav-link t-transition-effect"
-          >Features
-        </router-link> -->
         <router-link
           :to="{ name: 'Login' }"
           class="nav-link t-transition-effect"
         >
           Beta Access Login
         </router-link>
-        <!-- <router-link
-          :to="{ name: 'SignUp' }"
-          class="nav-link t-transition-effect"
-        >
-          Register for Beta Access
-        </router-link> -->
       </div>
       <div class="block md:hidden">
         <Menu />
@@ -81,9 +64,9 @@ export default defineComponent({
 
 <style lang="postcss" scoped>
 .nav-style {
-  @apply py-4 px-2 top-0 z-10 sticky
-  shadow-md bg-gray-925
-  backdrop-filter backdrop-blur-sm;
+  @apply py-4 px-2
+  shadow-md bg-gray-950
+  backdrop-filter backdrop-blur-sm border-b border-indigo-500;
 }
 .nav-link {
   @apply py-2 px-4 ml-2 font-heading rounded text-indigo-100;

@@ -1,3 +1,15 @@
+<script setup>
+import { ref } from "vue";
+import { getUserState } from "@/firebase";
+import Navbar from "@/components/Navbar.vue";
+import Loading from "@/components/Loading.vue";
+import Footer from "@/components/Footer.vue";
+
+const isLoading = ref(true);
+getUserState().then(() => {
+  isLoading.value = false;
+});
+</script>
 <template>
   <div
     v-if="isLoading"
@@ -16,31 +28,6 @@
     <Footer />
   </div>
 </template>
-
-<script>
-import { defineComponent, ref } from "vue";
-import Navbar from "@/components/Navbar.vue";
-import Loading from "@/components/Loading.vue";
-import Footer from "@/components/Footer.vue";
-import { getUserState } from "@/firebase";
-export default defineComponent({
-  name: "App",
-  components: {
-    Navbar,
-    Loading,
-    Footer,
-  },
-  setup(props) {
-    const isLoading = ref(true);
-    getUserState().then(() => {
-      isLoading.value = false;
-    });
-    return {
-      isLoading,
-    };
-  },
-});
-</script>
 
 <style scoped>
 #app-container {

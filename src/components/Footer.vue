@@ -18,7 +18,7 @@
       VIZOR was made with 💜 and ☕ by
       <a
         href="https://neointeractive.dev"
-        class="text-center text-sm text-indigo-100"
+        class="text-center text-sm text-red-100 hover:text-red-400"
         target="_blank"
         rel="noopener noreferrer"
         >Neo Interactive</a

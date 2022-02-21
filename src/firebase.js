@@ -2,7 +2,8 @@ import { initializeApp } from "firebase/app";
 import { computed, onMounted, onUnmounted, ref } from "vue";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-
+// import { useStore } from "@/stores/user.store";
+// const userStore = useStore();
 export const firebaseApp = initializeApp({
   apiKey: "AIzaSyAjPdWLiTHaGYc_ZEiiLu3ZxD--YpI8b4g",
   authDomain: "vizor-live.firebaseapp.com",
@@ -16,6 +17,7 @@ export const useAuthState = () => {
   const error = ref(null);
   const auth = getAuth();
   let unsubscribe;
+
   onMounted(() => {
     unsubscribe = onAuthStateChanged(
       auth,
@@ -23,9 +25,11 @@ export const useAuthState = () => {
       (e) => (error.value = e)
     );
   });
+
   onUnmounted(() => unsubscribe());
 
   const isAuthenticated = computed(() => user.value != null);
+  // if (user) userStore.setAuthData(user.user);
   return { user, error, isAuthenticated };
 };
 
