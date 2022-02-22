@@ -1,29 +1,80 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { watch, ref, reactive, onMounted } from "vue";
 import { db } from "@/firebase";
-import { collection, query, where, onSnapshot } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { useStore } from "@/stores/user.store";
+import { nanoid } from "nanoid";
 
 let matches = ref([]);
 let user = ref(null);
 
-const getMatchData = () => {
-  const { auth_data } = useStore();
-  const user = auth_data;
-  if (user) {
-    const q = query(collection(db, "matches"), where("owner", "==", user.uid));
-    const m = [];
-    onSnapshot(q, (querySnapshot) => {
-      querySnapshot.forEach((match) => m.push(match.data()));
-      matches.value = m;
-    });
-  }
-};
+let newMatch = reactive({
+  id: nanoid(),
+  heading: "",
+  subheading: "",
+  status: "Live",
+  created_at: db.Timestamp,
+  owner: user.uid,
+  team_one: {
+    score: 0,
+    logo: "",
+    name: "",
+    show_logo: true,
+    color: {
+      bg: "#ff2c3c",
+      text: "#ffffff",
+    },
+  },
+  team_two: {
+    score: 0,
+    logo: "",
+    show_logo: true,
+    name: "",
+    color: {
+      bg: "#2300FF",
+      text: "#ffffff",
+    },
+  },
+  scoreboard: {
+    theme: "default",
+    dark: true,
+    show_heading: true,
+    show_subheading: false,
+    premium: false,
+    sponsors: false,
+  },
+});
+
+// const createNewMatch = async () => {
+//   await setDoc(doc(db, "cities", "LA"), {
+//     name: "Los Angeles",
+//     state: "CA",
+//     country: "USA",
+//   });
+// };
+
+watch(newMatch, (currentValue, _oldValue) => {
+  const one_bg = document.getElementById("one-bg");
+  const two_bg = document.getElementById("two-bg");
+  const one_text = document.getElementById("one-text");
+  const two_text = document.getElementById("two-text");
+  one_bg.style.backgroundColor = currentValue.team_one.color.bg;
+  two_bg.style.backgroundColor = currentValue.team_two.color.bg;
+  one_text.style.backgroundColor = currentValue.team_one.color.text;
+  two_text.style.backgroundColor = currentValue.team_two.color.text;
+});
 
 onMounted(() => {
   const { auth_data } = useStore();
   user.value = auth_data;
-  getMatchData();
+  const one_bg = document.getElementById("one-bg");
+  const two_bg = document.getElementById("two-bg");
+  const one_text = document.getElementById("one-text");
+  const two_text = document.getElementById("two-text");
+  one_bg.style.backgroundColor = newMatch.team_one.color.bg;
+  two_bg.style.backgroundColor = newMatch.team_two.color.bg;
+  one_text.style.backgroundColor = newMatch.team_one.color.text;
+  two_text.style.backgroundColor = newMatch.team_two.color.text;
 });
 </script>
 
@@ -40,7 +91,7 @@ onMounted(() => {
         <div
           class="p-4 bg-gradient-to-r from-gray-900 via-gray-925 to-gray-950 border-b border-gray-500"
         >
-          <h2>New Match</h2>
+          <h2>Match Config</h2>
           <p>Creating a new Match will use one of your...</p>
         </div>
 
@@ -56,12 +107,22 @@ onMounted(() => {
               Give a name for your match. Keep this to less than 30 characters.
             </p>
           </div>
-          <div class="w-1/2 flex justify-center">
+          <div class="w-1/2 flex flex-col justify-center">
             <input
+              v-model="newMatch.heading"
               type="text"
               placeholder="VIZOR Invitational"
               class="w-full h-12 rounded bg-gray-925 border border-gray-500 px-4 py-2"
             />
+            <label class="cursor-pointer label w-52 opacity-70">
+              <input
+                v-model="newMatch.scoreboard.show_heading"
+                type="checkbox"
+                class="toggle toggle-xs"
+                checked
+              />
+              <span class="label-text ml-2"> Visible on scoreboard?</span>
+            </label>
           </div>
         </div>
         <div class="flex flex-row p-8">
@@ -71,19 +132,103 @@ onMounted(() => {
               Very short description of your match type.
             </p>
           </div>
-          <div class="w-1/2 flex justify-center">
+          <div class="w-1/2 flex flex-col justify-center">
             <input
+              v-model="newMatch.subheading"
               type="text"
               placeholder="Best of 7"
               class="w-full h-12 rounded bg-gray-925 border border-gray-500 px-4 py-2"
             />
+            <label class="cursor-pointer label w-52 opacity-70">
+              <input
+                v-model="newMatch.scoreboard.show_subheading"
+                type="checkbox"
+                class="toggle toggle-xs"
+                checked
+              />
+              <span class="label-text ml-2"> Visible on scoreboard?</span>
+            </label>
           </div>
         </div>
+        <div class="flex flex-row p-8">
+          <div class="w-1/2">
+            <h3 class="text-indigo-100 mb-2">Base Theme</h3>
+            <p class="text-xs w-72 opacity-90">
+              Choose a base theme for the scoreboard.
+            </p>
+          </div>
+          <div class="w-1/2 flex justify-center">
+            <select
+              v-model="newMatch.scoreboard.theme"
+              class="select w-full select-bordered"
+            >
+              <option disabled>----</option>
+              <option selected value="default">Minimal</option>
+              <option value="halo">Halo</option>
+            </select>
+          </div>
+        </div>
+        <div class="flex flex-row p-8">
+          <div class="w-1/2">
+            <h3 class="text-indigo-100 mb-2">Variant</h3>
+            <p class="text-xs w-72 opacity-90">
+              Choose between a dark or light variant. Some Pro scoreboards may
+              have additional variants.
+            </p>
+          </div>
+          <div class="w-1/2 flex">
+            <label class="swap swap-rotate">
+              <input v-model="newMatch.scoreboard.dark" type="checkbox" />
+              <svg
+                class="swap-off fill-current w-10 h-10 text-amber-100"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z"
+                />
+              </svg>
+              <svg
+                class="swap-on fill-current w-10 h-10 text-indigo-200"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z"
+                />
+              </svg>
+            </label>
+          </div>
+        </div>
+        <div class="flex flex-row p-8">
+          <div class="w-1/2">
+            <h3 class="text-indigo-100 mb-2">
+              <span class="badge badge-secondary badge-sm mr-2">Pro</span>
+              Sponsors
+            </h3>
+            <p class="text-xs w-72 opacity-90">
+              Coming Soon. Enable rotating Sponsor blocks on the scoreboard.
+            </p>
+          </div>
+          <div class="w-1/2 flex">
+            <div class="form-control">
+              <label class="cursor-pointer label">
+                <input
+                  type="checkbox"
+                  class="toggle toggle-secondary toggle-md"
+                  disabled
+                />
+              </label>
+            </div>
+          </div>
+        </div>
+        <!-- -->
+        <!-- TEAM ONE -->
+        <!-- -->
         <div class="px-7 mt-6">
           <h3>Team One</h3>
           <hr class="border-gray-500" />
         </div>
-
         <div class="flex flex-row px-8 py-2">
           <div class="w-1/2">
             <h3 class="text-indigo-100 mb-2">Name</h3>
@@ -93,42 +238,210 @@ onMounted(() => {
           </div>
           <div class="w-1/2 flex justify-center">
             <input
+              v-model="newMatch.team_one.name"
               type="text"
-              placeholder="VIZOR Invitational"
+              placeholder="Phoenix"
               class="w-full h-12 rounded bg-gray-925 border border-gray-500 px-4 py-2"
             />
           </div>
         </div>
         <div class="flex flex-row p-8">
           <div class="w-1/2">
-            <h3 class="text-indigo-100 mb-2">Text & Color</h3>
+            <h3 class="text-indigo-100 mb-2">Team Logo</h3>
             <p class="text-xs w-72 opacity-90">
-              Choose a team color for Team One.
+              A direct link (URL) to this team's image logo. Square logos are
+              <strong>highly</strong> recommended. If no link is provided, a
+              default logo will be used.
             </p>
           </div>
           <div class="w-1/2 flex justify-center">
             <input
+              v-model="newMatch.team_one.logo"
               type="text"
-              placeholder="Best of 7"
+              placeholder="https://i.imgur.com/Q2Unw.gif"
               class="w-full h-12 rounded bg-gray-925 border border-gray-500 px-4 py-2"
             />
           </div>
         </div>
         <div class="flex flex-row p-8">
           <div class="w-1/2">
-            <h3 class="text-indigo-100 mb-2">Image</h3>
+            <h3 class="text-indigo-100 mb-2">Background Color</h3>
             <p class="text-xs w-72 opacity-90">
-              A direct link (URL) to this team's logo. Square logos are
-              <strong>highly</strong> recommended.
+              Enter a team color for Team One in hex format. You can use
+              <a
+                href="https://www.canva.com/colors/color-wheel/"
+                target="_blank"
+                rel="noreferrer"
+                class="text-indigo-200"
+                >this tool</a
+              >
+              to generate hex colors.
+            </p>
+          </div>
+          <div class="w-1/2 flex justify-center">
+            <div class="mr-4">
+              <label for="bg-color">Preview</label>
+              <div
+                id="one-bg"
+                class="w-28 h-12 rounded border border-gray-500"
+              ></div>
+            </div>
+            <div class="w-full">
+              <label for="bg-color">Color - Hex Format</label>
+              <input
+                v-model="newMatch.team_one.color.bg"
+                type="text"
+                placeholder="#ff2c3c"
+                class="w-full h-12 rounded bg-gray-925 border border-gray-500 px-4 py-2"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-row p-8">
+          <div class="w-1/2">
+            <h3 class="text-indigo-100 mb-2">Text Color</h3>
+            <p class="text-xs w-72 opacity-90">
+              Enter a text color for Team One in hex format. You can use
+              <a
+                href="https://www.canva.com/colors/color-wheel/"
+                target="_blank"
+                rel="noreferrer"
+                class="text-indigo-200"
+                >this tool</a
+              >
+              to generate hex colors.
+            </p>
+          </div>
+          <div class="w-1/2 flex justify-center">
+            <div class="mr-4">
+              <label for="bg-color">Preview</label>
+              <div
+                id="one-text"
+                class="w-28 h-12 rounded border border-gray-500"
+              ></div>
+            </div>
+            <div class="w-full">
+              <label for="bg-color">Color - Hex Format</label>
+              <input
+                v-model="newMatch.team_one.color.text"
+                type="text"
+                placeholder="#ffffff"
+                class="w-full h-12 rounded bg-gray-925 border border-gray-500 px-4 py-2"
+              />
+            </div>
+          </div>
+        </div>
+        <!-- -->
+        <!-- TEAM TWO -->
+        <!-- -->
+        <div class="px-7 mt-6">
+          <h3>Team Two</h3>
+          <hr class="border-gray-500" />
+        </div>
+        <div class="flex flex-row px-8 py-2">
+          <div class="w-1/2">
+            <h3 class="text-indigo-100 mb-2">Name</h3>
+            <p class="text-xs w-72 opacity-90">
+              This is pretty self explanatory.
             </p>
           </div>
           <div class="w-1/2 flex justify-center">
             <input
+              v-model="newMatch.team_two.name"
               type="text"
-              placeholder="Best of 7"
+              placeholder="Sentinels"
               class="w-full h-12 rounded bg-gray-925 border border-gray-500 px-4 py-2"
             />
           </div>
+        </div>
+        <div class="flex flex-row p-8">
+          <div class="w-1/2">
+            <h3 class="text-indigo-100 mb-2">Team Logo</h3>
+            <p class="text-xs w-72 opacity-90">
+              A direct link (URL) to this team's image logo. Square logos are
+              <strong>highly</strong> recommended. If no link is provided, a
+              default logo will be used.
+            </p>
+          </div>
+          <div class="w-1/2 flex justify-center">
+            <input
+              v-model="newMatch.team_two.logo"
+              type="text"
+              placeholder="https://i.imgur.com/Q2Unw.gif"
+              class="w-full h-12 rounded bg-gray-925 border border-gray-500 px-4 py-2"
+            />
+          </div>
+        </div>
+        <div class="flex flex-row p-8">
+          <div class="w-1/2">
+            <h3 class="text-indigo-100 mb-2">Background Color</h3>
+            <p class="text-xs w-72 opacity-90">
+              Enter a team color for Team two in hex format. You can use
+              <a
+                href="https://www.canva.com/colors/color-wheel/"
+                target="_blank"
+                rel="noreferrer"
+                class="text-indigo-200"
+                >this tool</a
+              >
+              to generate hex colors.
+            </p>
+          </div>
+          <div class="w-1/2 flex justify-center">
+            <div class="mr-4">
+              <label for="bg-color">Preview</label>
+              <div
+                id="two-bg"
+                class="w-28 h-12 rounded border border-gray-500"
+              ></div>
+            </div>
+            <div class="w-full">
+              <label for="bg-color">Color - Hex Format</label>
+              <input
+                v-model="newMatch.team_two.color.bg"
+                type="text"
+                placeholder="#ff2c3c"
+                class="w-full h-12 rounded bg-gray-925 border border-gray-500 px-4 py-2"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-row p-8">
+          <div class="w-1/2">
+            <h3 class="text-indigo-100 mb-2">Text Color</h3>
+            <p class="text-xs w-72 opacity-90">
+              Enter a text color for Team two in hex format. You can use
+              <a
+                href="https://www.canva.com/colors/color-wheel/"
+                target="_blank"
+                rel="noreferrer"
+                class="text-indigo-200"
+                >this tool</a
+              >
+              to generate hex colors.
+            </p>
+          </div>
+          <div class="w-1/2 flex justify-center">
+            <div class="mr-4">
+              <label for="bg-color">Preview</label>
+              <div
+                id="two-text"
+                class="w-28 h-12 rounded border border-gray-500"
+              ></div>
+            </div>
+            <div class="w-full">
+              <label for="bg-color">Color - Hex Format</label>
+              <input
+                v-model="newMatch.team_two.color.text"
+                type="text"
+                placeholder="#ffffff"
+                class="w-full h-12 rounded bg-gray-925 border border-gray-500 px-4 py-2"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-center py-12">
+          <button class="btn btn-wide">Create Match</button>
         </div>
       </div>
     </div>

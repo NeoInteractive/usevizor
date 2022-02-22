@@ -18,9 +18,9 @@ getUserState().then(() => {
   >
     <Loading class="h-16 w-16" />
   </div>
-  <div id="app-container" v-else class="flex flex-col min-h-screen">
+  <div id="app-container" v-else class="flex flex-col">
     <Navbar />
-    <router-view class="h-screen" v-slot="{ Component, route }">
+    <router-view class="min-h-screen pb-12" v-slot="{ Component, route }">
       <transition name="slide" mode="out-in">
         <component :is="Component" :key="route.path" />
       </transition>
