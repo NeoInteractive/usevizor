@@ -1,80 +1,100 @@
 <script setup>
 import { watch, ref, reactive, onMounted } from "vue";
 import { db } from "@/firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { useStore } from "@/stores/user.store";
 import { nanoid } from "nanoid";
+import Default from "@/components/scoreboards/Default.vue";
+import ColorInput from "vue-color-input";
 
 let matches = ref([]);
 let user = ref(null);
 
 let newMatch = reactive({
   id: nanoid(),
-  heading: "",
+  heading: "Title",
   subheading: "",
-  status: "Live",
-  created_at: db.Timestamp,
-  owner: user.uid,
+  status: "active",
+  created_at: serverTimestamp(),
+  owner: undefined,
   team_one: {
     score: 0,
-    logo: "",
-    name: "",
+    logo: "https://cdn.usevizor.com/default_logo.png",
+    name: "Team One",
     show_logo: true,
     color: {
-      bg: "#ff2c3c",
-      text: "#ffffff",
+      bg: "rgb(142, 28, 28)",
+      text: "rgb(255, 255, 255)",
     },
   },
   team_two: {
     score: 0,
-    logo: "",
+    logo: "https://cdn.usevizor.com/default_logo.png",
     show_logo: true,
-    name: "",
+    name: "Team Two",
     color: {
-      bg: "#2300FF",
-      text: "#ffffff",
+      bg: "rgb(30, 61, 159)",
+      text: "rgb(255, 255, 255)",
     },
   },
   scoreboard: {
     theme: "default",
     dark: true,
     show_heading: true,
-    show_subheading: false,
+    show_subheading: true,
     premium: false,
     sponsors: false,
   },
 });
+let demoMatch = {
+  id: nanoid(),
+  heading: "Lone Wolf Tournament",
+  subheading: "Best of 7",
+  status: "Live",
+  created_at: serverTimestamp(),
+  owner: undefined,
+  team_one: {
+    score: 0,
+    logo: "http://tinygraphs.com/labs/isogrids/hexa16/tinygraphs?theme=seascape&numcolors=4&size=220&fmt=svg",
+    name: "Lightning",
+    show_logo: true,
+    color: {
+      bg: "rgb(142, 28, 28)",
+      text: "rgb(255, 255, 255)",
+    },
+  },
+  team_two: {
+    score: 0,
+    logo: "http://tinygraphs.com/labs/isogrids/hexa16/tinygraphs?theme=seascape&numcolors=4&size=220&fmt=svg",
+    show_logo: true,
+    name: "Thunder",
+    color: {
+      bg: "rgb(30, 61, 159)",
+      text: "rgb(255, 255, 255)",
+    },
+  },
+  scoreboard: {
+    theme: "default",
+    dark: true,
+    show_heading: true,
+    show_subheading: true,
+    premium: false,
+    sponsors: false,
+  },
+};
 
-// const createNewMatch = async () => {
-//   await setDoc(doc(db, "cities", "LA"), {
-//     name: "Los Angeles",
-//     state: "CA",
-//     country: "USA",
-//   });
-// };
-
-watch(newMatch, (currentValue, _oldValue) => {
-  const one_bg = document.getElementById("one-bg");
-  const two_bg = document.getElementById("two-bg");
-  const one_text = document.getElementById("one-text");
-  const two_text = document.getElementById("two-text");
-  one_bg.style.backgroundColor = currentValue.team_one.color.bg;
-  two_bg.style.backgroundColor = currentValue.team_two.color.bg;
-  one_text.style.backgroundColor = currentValue.team_one.color.text;
-  two_text.style.backgroundColor = currentValue.team_two.color.text;
-});
+const createNewMatch = async () => {
+  newMatch.owner = user.value.uid;
+  await setDoc(doc(db, "matches", newMatch.id), newMatch);
+  alert("Match created");
+};
+const loadDemoMatch = () => {
+  newMatch = demoMatch;
+};
 
 onMounted(() => {
   const { auth_data } = useStore();
   user.value = auth_data;
-  const one_bg = document.getElementById("one-bg");
-  const two_bg = document.getElementById("two-bg");
-  const one_text = document.getElementById("one-text");
-  const two_text = document.getElementById("two-text");
-  one_bg.style.backgroundColor = newMatch.team_one.color.bg;
-  two_bg.style.backgroundColor = newMatch.team_two.color.bg;
-  one_text.style.backgroundColor = newMatch.team_one.color.text;
-  two_text.style.backgroundColor = newMatch.team_two.color.text;
 });
 </script>
 
@@ -94,9 +114,15 @@ onMounted(() => {
           <h2>Match Config</h2>
           <p>Creating a new Match will use one of your...</p>
         </div>
+        <Default class="mt-4" :matchData="newMatch" />
 
         <div class="px-7 mt-6">
-          <h3>General Options</h3>
+          <h3>
+            General Options
+            <span @click="loadDemoMatch" class="text-xs"
+              >Load Demo Match Config</span
+            >
+          </h3>
           <hr class="border-gray-500" />
         </div>
 
@@ -164,7 +190,6 @@ onMounted(() => {
             >
               <option disabled>----</option>
               <option selected value="default">Minimal</option>
-              <option value="halo">Halo</option>
             </select>
           </div>
         </div>
@@ -267,31 +292,23 @@ onMounted(() => {
           <div class="w-1/2">
             <h3 class="text-indigo-100 mb-2">Background Color</h3>
             <p class="text-xs w-72 opacity-90">
-              Enter a team color for Team One in hex format. You can use
-              <a
-                href="https://www.canva.com/colors/color-wheel/"
-                target="_blank"
-                rel="noreferrer"
-                class="text-indigo-200"
-                >this tool</a
-              >
-              to generate hex colors.
+              Choose a color for team one's background.
             </p>
           </div>
           <div class="w-1/2 flex justify-center">
             <div class="mr-4">
-              <label for="bg-color">Preview</label>
-              <div
-                id="one-bg"
-                class="w-28 h-12 rounded border border-gray-500"
-              ></div>
+              <label for="bg-color">Color</label>
+              <color-input
+                v-model="newMatch.team_one.color.bg"
+                format="rgb string"
+                class="h-12"
+              />
             </div>
             <div class="w-full">
-              <label for="bg-color">Color - Hex Format</label>
+              <label for="bg-color">Value</label>
               <input
                 v-model="newMatch.team_one.color.bg"
                 type="text"
-                placeholder="#ff2c3c"
                 class="w-full h-12 rounded bg-gray-925 border border-gray-500 px-4 py-2"
               />
             </div>
@@ -301,31 +318,23 @@ onMounted(() => {
           <div class="w-1/2">
             <h3 class="text-indigo-100 mb-2">Text Color</h3>
             <p class="text-xs w-72 opacity-90">
-              Enter a text color for Team One in hex format. You can use
-              <a
-                href="https://www.canva.com/colors/color-wheel/"
-                target="_blank"
-                rel="noreferrer"
-                class="text-indigo-200"
-                >this tool</a
-              >
-              to generate hex colors.
+              Choose a text color for Team One.
             </p>
           </div>
           <div class="w-1/2 flex justify-center">
             <div class="mr-4">
-              <label for="bg-color">Preview</label>
-              <div
-                id="one-text"
-                class="w-28 h-12 rounded border border-gray-500"
-              ></div>
+              <label for="bg-color">Color</label>
+              <color-input
+                v-model="newMatch.team_one.color.text"
+                format="rgb string"
+                class="h-12"
+              />
             </div>
             <div class="w-full">
-              <label for="bg-color">Color - Hex Format</label>
+              <label for="text-color">Value</label>
               <input
                 v-model="newMatch.team_one.color.text"
                 type="text"
-                placeholder="#ffffff"
                 class="w-full h-12 rounded bg-gray-925 border border-gray-500 px-4 py-2"
               />
             </div>
@@ -359,8 +368,7 @@ onMounted(() => {
             <h3 class="text-indigo-100 mb-2">Team Logo</h3>
             <p class="text-xs w-72 opacity-90">
               A direct link (URL) to this team's image logo. Square logos are
-              <strong>highly</strong> recommended. If no link is provided, a
-              default logo will be used.
+              <strong>highly</strong> recommended.
             </p>
           </div>
           <div class="w-1/2 flex justify-center">
@@ -376,31 +384,23 @@ onMounted(() => {
           <div class="w-1/2">
             <h3 class="text-indigo-100 mb-2">Background Color</h3>
             <p class="text-xs w-72 opacity-90">
-              Enter a team color for Team two in hex format. You can use
-              <a
-                href="https://www.canva.com/colors/color-wheel/"
-                target="_blank"
-                rel="noreferrer"
-                class="text-indigo-200"
-                >this tool</a
-              >
-              to generate hex colors.
+              Choose a color for team two's background.
             </p>
           </div>
           <div class="w-1/2 flex justify-center">
             <div class="mr-4">
-              <label for="bg-color">Preview</label>
-              <div
-                id="two-bg"
-                class="w-28 h-12 rounded border border-gray-500"
-              ></div>
+              <label for="bg-color">Color</label>
+              <color-input
+                v-model="newMatch.team_two.color.bg"
+                format="rgb string"
+                class="h-12"
+              />
             </div>
             <div class="w-full">
-              <label for="bg-color">Color - Hex Format</label>
+              <label for="bg-color">Value</label>
               <input
                 v-model="newMatch.team_two.color.bg"
                 type="text"
-                placeholder="#ff2c3c"
                 class="w-full h-12 rounded bg-gray-925 border border-gray-500 px-4 py-2"
               />
             </div>
@@ -410,38 +410,32 @@ onMounted(() => {
           <div class="w-1/2">
             <h3 class="text-indigo-100 mb-2">Text Color</h3>
             <p class="text-xs w-72 opacity-90">
-              Enter a text color for Team two in hex format. You can use
-              <a
-                href="https://www.canva.com/colors/color-wheel/"
-                target="_blank"
-                rel="noreferrer"
-                class="text-indigo-200"
-                >this tool</a
-              >
-              to generate hex colors.
+              Choose a text color for Team two.
             </p>
           </div>
           <div class="w-1/2 flex justify-center">
             <div class="mr-4">
-              <label for="bg-color">Preview</label>
-              <div
-                id="two-text"
-                class="w-28 h-12 rounded border border-gray-500"
-              ></div>
+              <label for="bg-color">Color</label>
+              <color-input
+                v-model="newMatch.team_two.color.text"
+                format="rgb string"
+                class="h-12"
+              />
             </div>
             <div class="w-full">
-              <label for="bg-color">Color - Hex Format</label>
+              <label for="text-color">Value</label>
               <input
                 v-model="newMatch.team_two.color.text"
                 type="text"
-                placeholder="#ffffff"
                 class="w-full h-12 rounded bg-gray-925 border border-gray-500 px-4 py-2"
               />
             </div>
           </div>
         </div>
         <div class="flex justify-center py-12">
-          <button class="btn btn-wide">Create Match</button>
+          <button @click="createNewMatch" class="btn btn-wide">
+            Create Match
+          </button>
         </div>
       </div>
     </div>
@@ -450,5 +444,10 @@ onMounted(() => {
 <style>
 .btn {
   @apply py-2 px-4 ml-2 font-heading rounded bg-indigo-500 text-white;
+}
+.color-input.user .box {
+  width: 100px;
+  height: 48px;
+  border-radius: 4px;
 }
 </style>

@@ -31,7 +31,8 @@ getUserState().then(() => {
 
 <style scoped>
 #app-container {
-  background: url(@/assets/blobs.png);
+  background: #07091b;
+  /* background: url(@/assets/blobs.png); */
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;

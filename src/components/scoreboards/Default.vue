@@ -64,8 +64,8 @@ const matchData = ref(props.matchData);
             <div class="col-span-3">
               <div class="flex flex-row justify-start">
                 <img
-                  v-if="matchData.team_one.show_icon"
-                  :src="getTeamImage('one', matchData.team_one.name)"
+                  v-if="matchData.team_one.show_logo"
+                  :src="matchData.team_one.logo"
                   class="rounded-md w-10 h-10"
                 />
                 <h2
@@ -125,8 +125,8 @@ const matchData = ref(props.matchData);
                   {{ matchData.team_two.name }}
                 </h2>
                 <img
-                  v-if="matchData.team_two.show_icon"
-                  :src="getTeamImage('two', matchData.team_two.name)"
+                  v-if="matchData.team_two.show_logo"
+                  :src="matchData.team_two.logo"
                   class="rounded-md w-10 h-10"
                 />
               </div>

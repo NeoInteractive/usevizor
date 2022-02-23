@@ -8,11 +8,6 @@ const routes = [
     component: () => import("@/views/Home.vue"),
   },
   {
-    path: "/",
-    name: "Features",
-    component: () => import("@/views/Features.vue"),
-  },
-  {
     path: "/beta/registered",
     name: "BetaRegistered",
     component: () => import("@/views/auth/BetaRegistered.vue"),
@@ -47,6 +42,18 @@ const routes = [
     component: () => import("@/views/Dashboard.vue"),
     meta: { requiresAuth: true },
   },
+  {
+    path: "/dashboard/m/:id",
+    name: "MatchAdmin",
+    component: () => import("@/views/Match.vue"),
+    meta: { requiresAuth: true },
+  },
+  // {
+  //   path: "/m/:id",
+  //   name: "MatchScoreboard",
+  //   component: () => import("@/views/Dashboard.vue"),
+  //   meta: { requiresAuth: true },
+  // },
   {
     path: "/:pathMatch(.*)*",
     name: "NotFound",
