@@ -41,14 +41,31 @@ let activeTab = ref("all-matches");
                 Account
               </h3>
               <p
-                class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer"
+                class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer opacity-50"
               >
                 Preferences
               </p>
               <p
-                class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer"
+                class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer opacity-50"
               >
                 Billing
+              </p>
+            </div>
+            <div class="my-3">
+              <h3
+                class="text-sm uppercase text-indigo-300 font-bold mb-4 tracking-widest"
+              >
+                App
+              </h3>
+              <p
+                class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer opacity-50"
+              >
+                Changelog
+              </p>
+              <p
+                class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer opacity-50"
+              >
+                About
               </p>
             </div>
           </div>

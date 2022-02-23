@@ -35,7 +35,7 @@ onMounted(() => {
         <button class="btn">Create Match</button>
       </div>
     </div>
-    <div class="flex flex-row flex-wrap">
+    <div v-if="matches.length > 0" class="flex flex-row flex-wrap">
       <router-link
         tag="div"
         :to="`/dashboard/m/${match.id}`"
@@ -54,6 +54,11 @@ onMounted(() => {
           {{ match.status }} | {{ match.id.toUpperCase() }}
         </h1>
       </router-link>
+    </div>
+    <div v-else class="py-36 text-center">
+      <h3 class="text-white">
+        You haven't created any matches yet. Create one to view them here.
+      </h3>
     </div>
   </div>
 </template>
