@@ -57,7 +57,8 @@ onMounted(() => {
     </div>
     <div v-else class="py-36 text-center">
       <h3 class="text-white">
-        You haven't created any matches yet. Create one to view them here.
+        You haven't created any matches yet. Create one from the left menu to
+        view them here.
       </h3>
     </div>
   </div>

@@ -119,9 +119,9 @@ onMounted(() => {
         <div class="px-7 mt-6">
           <h3>
             General Options
-            <span @click="loadDemoMatch" class="text-xs"
-              >Load Demo Match Config</span
-            >
+            <span @click="loadDemoMatch()" class="ml-6 text-xs cursor-pointer">
+              Demo Config
+            </span>
           </h3>
           <hr class="border-gray-500" />
         </div>
