@@ -42,7 +42,8 @@ createApp(App)
   .use(router)
   .use(pinia)
   .use(Toast, {
-    transition: "Vue-Toastification__bounce",
+    position: "top-center",
+    transition: "Vue-Toastification__fade",
     maxToasts: 20,
     newestOnTop: true,
   })

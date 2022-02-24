@@ -7,16 +7,20 @@ import { useRoute } from "vue-router";
 let route = useRoute();
 let matchData = ref();
 
-function getMatchData() {
-  if (!route.params.id) return;
+const getMatchData = (def) => {
+  const match_id = def || route.params.match_id;
   onSnapshot(
-    doc(db, "matches", route.params.id),
+    doc(db, "matches", match_id),
     (doc) => (matchData.value = doc.data())
   );
-}
+};
 
 onMounted(() => {
-  getMatchData();
+  if (!route.params.match_id) {
+    getMatchData("TZ7Ezj5JPQ7cPlkyroQFS");
+  } else {
+    getMatchData();
+  }
 });
 </script>
 
