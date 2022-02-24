@@ -26,12 +26,12 @@ const routes = [
     component: () => import("@/views/auth/Login.vue"),
     meta: { requiresAuth: false, has_nav: true, has_foot: true },
   },
-  {
-    path: "/auth/signup",
-    name: "SignUp",
-    component: () => import("@/views/auth/SignUp.vue"),
-    meta: { requiresAuth: false, has_nav: true, has_foot: true },
-  },
+  // {
+  //   path: "/auth/signup",
+  //   name: "SignUp",
+  //   component: () => import("@/views/auth/SignUp.vue"),
+  //   meta: { requiresAuth: false, has_nav: true, has_foot: true },
+  // },
   {
     path: "/auth/forgot-password",
     name: "ForgotPassword",

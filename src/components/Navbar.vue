@@ -15,14 +15,12 @@ const goToHome = () => {
 <template>
   <nav class="t-transition-effect nav-style px-2 md:px-0">
     <div class="t-main-set flex justify-between items-center">
-      <router-link :to="{ name: 'Home' }" class="t-transition-effect">
-        <img
-          src="@/assets/logo-long.svg"
-          alt="Vizor Logo"
-          class="w-28"
-          @click="goToHome"
-        />
-      </router-link>
+      <img
+        src="@/assets/logo-long.svg"
+        alt="Vizor Logo"
+        class="w-28"
+        @click="goToHome"
+      />
 
       <div class="hidden md:block" v-if="user">
         <router-link
