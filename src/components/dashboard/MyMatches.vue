@@ -47,18 +47,22 @@ onMounted(() => {
         :to="`/dashboard/m/${match.id}`"
         v-for="match in matches"
         :key="match.id"
-        class="w-1/3 h-28 bg-gray-950 border border-gray-500 p-4 flex flex-col justify-between cursor-pointer hover:bg-gray-925 hover:border-indigo-400 transition rounded-md m-2 active:bg-violet-700"
+        class="w-1/3 p-2"
       >
-        <div class="flex flex-row justify-between">
-          <h1 class="text-sm">{{ match.heading }}</h1>
-          <span v-if="match.scoreboard.premium" class="badge badge-secondary">
-            Pro
-          </span>
-          <span v-else class="badge">Basic</span>
+        <div
+          class="h-28 bg-gray-950 border border-gray-500 p-4 flex flex-col justify-between cursor-pointer hover:bg-gray-925 hover:border-indigo-400 transition rounded-md active:bg-violet-700"
+        >
+          <div class="flex flex-row justify-between">
+            <h1 class="text-sm">{{ match.heading }}</h1>
+            <span v-if="match.scoreboard.premium" class="badge badge-secondary">
+              Pro
+            </span>
+            <span v-else class="badge">Basic</span>
+          </div>
+          <h1 class="text-xs font-light text-indigo-100 opacity-70">
+            {{ match.status }} | {{ match.id.toUpperCase() }}
+          </h1>
         </div>
-        <h1 class="text-xs font-light text-indigo-100 opacity-70">
-          {{ match.status }} | {{ match.id.toUpperCase() }}
-        </h1>
       </router-link>
     </div>
     <div v-if="noMatches" class="py-36 text-center">

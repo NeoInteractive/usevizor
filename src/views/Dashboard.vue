@@ -75,7 +75,10 @@ let activeTab = ref("all-matches");
             v-if="activeTab == 'all-matches'"
             @create-match="activeTab = 'create-match'"
           />
-          <create-match v-if="activeTab == 'create-match'" />
+          <create-match
+            v-if="activeTab == 'create-match'"
+            @match-created="activeTab = 'all-matches'"
+          />
         </div>
       </div>
     </div>

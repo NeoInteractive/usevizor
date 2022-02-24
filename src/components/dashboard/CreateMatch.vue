@@ -1,15 +1,24 @@
 <script setup>
-import { watch, ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import { db } from "@/firebase";
-import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { useToast } from "vue-toastification";
 import { useStore } from "@/stores/user.store";
 import { nanoid } from "nanoid";
 import Default from "@/components/scoreboards/Default.vue";
 import ColorInput from "vue-color-input";
-import { useRouter } from "vue-router";
+import {
+  doc,
+  setDoc,
+  serverTimestamp,
+  query,
+  where,
+  onSnapshot,
+  collection,
+} from "firebase/firestore";
 
-const router = useRouter();
-let matches = ref([]);
+const emit = defineEmits(["createMatch"]);
+const toast = useToast();
+let matches = ref();
 let user = ref(null);
 let newMatch = reactive({
   id: nanoid(),
@@ -49,11 +58,28 @@ let newMatch = reactive({
 });
 
 const createNewMatch = async () => {
+  if (matches.value.length >= 5) {
+    toast.error("Your account has reached its free match limit");
+    return;
+  }
   newMatch.owner = user.value.uid;
   await setDoc(doc(db, "matches", newMatch.id), newMatch);
-  router.push(`/dashboard/m/${newMatch.id}`);
+  toast.success("Created Match!");
+  emit("matchCreated");
 };
 
+const getMatchData = () => {
+  const { auth_data } = useStore();
+  const user = auth_data;
+  if (user) {
+    const q = query(collection(db, "matches"), where("owner", "==", user.uid));
+    const m = [];
+    onSnapshot(q, (querySnapshot) => {
+      querySnapshot.forEach((match) => m.push(match.data()));
+      matches.value = m;
+    });
+  }
+};
 const loadDemoMatch = () => {
   newMatch = demoMatch;
 };
@@ -62,6 +88,7 @@ onMounted(() => {
   window.scrollTo({ top: 0, behavior: "smooth" });
   const { auth_data } = useStore();
   user.value = auth_data;
+  getMatchData();
 });
 </script>
 
@@ -69,7 +96,7 @@ onMounted(() => {
   <div>
     <div class="flex flex-row justify-between mb-8 items-center">
       <h1 class="">Create Match</h1>
-      <p class="">{{ matches.length }} / ∞&ensp;Created</p>
+      <p v-if="matches" class="">{{ matches.length }} / 5 &ensp;Created</p>
     </div>
     <div class="flex flex-row">
       <div

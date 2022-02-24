@@ -2,6 +2,8 @@ import { createApp } from "vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { createPinia } from "pinia";
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
 
 import {
   faBars,
@@ -39,4 +41,9 @@ createApp(App)
   .component("font-awesome-icon", FontAwesomeIcon)
   .use(router)
   .use(pinia)
+  .use(Toast, {
+    transition: "Vue-Toastification__bounce",
+    maxToasts: 20,
+    newestOnTop: true,
+  })
   .mount("#app");
