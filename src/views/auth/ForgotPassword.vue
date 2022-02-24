@@ -1,35 +1,51 @@
 <template>
-  <section class="t-auth-section">
-    <form @submit.prevent="handleSubmit" class="t-auth-form">
-      <h1 class="mb-6">Forgot Password</h1>
-      <hr />
-      <div class="mb-4">
-        <label class="block text-sm font-bold mb-2" for="email"> Email </label>
-        <input class="t-input" type="text" id="email" placeholder="Email" />
-      </div>
-      <div class="flex justify-between items-center">
-        <button type="submit" class="t-btn inline-flex items-center bg-primary">
-          <Loading class="h-5 w-5" v-show="loading" />
-          Submit
-        </button>
-        <h5>
-          Remembered Password?
-          <router-link :to="{ name: 'Login' }" class="text-primary"
-            >Login
-          </router-link>
-        </h5>
-      </div>
-
-      <div
-        v-if="message.length > 0"
-        :class="`mt-4 p-4 rounded ${
-          message.substr(0, 5) !== 'Email' ? 'bg-error' : 'bg-primary'
-        }`"
+  <div class="bg-gray-900 pt-24">
+    <div class="t-main-set flex-1 grid place-items-center">
+      <section
+        class="p-12 bg-gray-950/25 w-1/2 rounded backdrop-blur-sm border border-gray-925"
       >
-        {{ message }}
-      </div>
-    </form>
-  </section>
+        <form @submit.prevent="handleSubmit">
+          <h1 class="mb-6">Forgot Password</h1>
+          <hr />
+          <div class="mb-4">
+            <label class="block text-sm font-bold mb-2" for="email">
+              Email
+            </label>
+            <input
+              type="text"
+              id="email"
+              placeholder="Email"
+              class="w-full h-12 rounded bg-gray-925 border border-gray-500 px-4 py-2"
+            />
+          </div>
+          <div class="flex justify-between items-center">
+            <button
+              type="submit"
+              class="t-btn inline-flex items-center bg-primary"
+            >
+              <Loading class="h-5 w-5" v-show="loading" />
+              Submit
+            </button>
+            <h5>
+              Remembered Password?
+              <router-link :to="{ name: 'Login' }" class="text-primary ml-4">
+                Login
+              </router-link>
+            </h5>
+          </div>
+
+          <div
+            v-if="message.length > 0"
+            :class="`mt-4 p-4 rounded ${
+              message.substr(0, 5) !== 'Email' ? 'bg-error' : 'bg-primary'
+            }`"
+          >
+            {{ message }}
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -67,4 +83,3 @@ export default {
   },
 };
 </script>
-

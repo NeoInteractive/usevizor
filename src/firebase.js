@@ -29,7 +29,6 @@ export const useAuthState = () => {
   onUnmounted(() => unsubscribe());
 
   const isAuthenticated = computed(() => user.value != null);
-  // if (user) userStore.setAuthData(user.user);
   return { user, error, isAuthenticated };
 };
 
