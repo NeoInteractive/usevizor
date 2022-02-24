@@ -59,7 +59,10 @@ let newMatch = reactive({
 
 const createNewMatch = async () => {
   if (matches.value.length >= 5) {
-    toast.error("Your account has reached its free match limit");
+    window.scrollTo(0, 0);
+    toast.error(
+      "Your account has reached its free match limit. Delete a match to create a new one."
+    );
     return;
   }
   newMatch.owner = user.value.uid;
@@ -94,20 +97,27 @@ onMounted(() => {
 
 <template>
   <div>
-    <div class="flex flex-row justify-between mb-8 items-center">
-      <h1 class="">Create Match</h1>
-      <p v-if="matches" class="">{{ matches.length }} / 5 &ensp;Created</p>
+    <div
+      class="flex flex-row justify-between border-b-0 items-center bg-gray-950 p-4 border-b border-r border-gray-600 bg-gradient-to-r from-gray-900 via-gray-925 to-gray-950"
+    >
+      <h1 class="text-white tracking-wide font-normal text-xl">
+        Create a New Match
+      </h1>
+      <div>
+        <code
+          v-if="matches"
+          :class="{ 'text-red-500 font-bold': matches.length == 5 }"
+          >{{ matches.length }} / 5
+        </code>
+        <span class="tooltip tooltip-top mr-6" data-tip="Free matches created">
+          <i class="fa-duotone fa-circle-question"></i>
+        </span>
+      </div>
     </div>
     <div class="flex flex-row">
       <div
-        class="w-full bg-gray-950 border border-gray-500 flex flex-col justify-between rounded-md"
+        class="w-full bg-gray-950 border border-gray-500 flex flex-col justify-between"
       >
-        <div
-          class="p-4 bg-gradient-to-r from-gray-900 via-gray-925 to-gray-950 border-b border-gray-500"
-        >
-          <h2>Match Config</h2>
-          <p>Creating a new Match will use one of your...</p>
-        </div>
         <Default />
 
         <div class="px-7 mt-6">
@@ -120,6 +130,22 @@ onMounted(() => {
           <hr class="border-gray-500" />
         </div>
 
+        <div class="flex flex-row px-8 py-2 mb-6">
+          <div class="w-1/2">
+            <h3 class="text-indigo-100 mb-2">Pricing Plan</h3>
+          </div>
+          <div class="w-1/2 flex flex-col justify-center">
+            <select
+              v-model="newMatch.scoreboard.premium"
+              name="bg-color"
+              id="bg-color"
+              class="w-full h-12 rounded bg-gray-925 border border-gray-500 px-4 py-2"
+            >
+              <option :value="false" selected>Free</option>
+              <option disabled :value="true">Pro</option>
+            </select>
+          </div>
+        </div>
         <div class="flex flex-row px-8 py-2">
           <div class="w-1/2">
             <h3 class="text-indigo-100 mb-2">Heading</h3>
@@ -183,7 +209,7 @@ onMounted(() => {
               class="select w-full select-bordered"
             >
               <option disabled>----</option>
-              <option selected value="default">Minimal</option>
+              <option selected value="default">Free</option>
             </select>
           </div>
         </div>
