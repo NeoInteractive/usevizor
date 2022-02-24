@@ -61,7 +61,9 @@ onMounted(() => {
       <p class="text-heading font-bold text-4xl mb-4">
         {{ matchData.heading }}
       </p>
-      <div class="flex flex-row justify-between mt-4 items-center bg-gray-950">
+      <div
+        class="flex flex-row justify-between mt-4 items-center bg-gray-950 p-4 rounded-t-md"
+      >
         <router-link
           to="/dashboard"
           class="text-heading text-sm opacity-50 hover:text-indigo-400 hover:opacity-100 hover:font-bold"
@@ -75,7 +77,7 @@ onMounted(() => {
         </code>
       </div>
 
-      <hr class="mt-4 mb-0" />
+      <hr class="my-0" />
       <div class="pt-6 pb-6 mb-12 rounded-b-md bg-gray-900">
         <default />
       </div>
