@@ -37,7 +37,7 @@ const submitForm = async () => {
   <div class="bg-gray-950">
     <div class="t-main-set flex-1 grid place-items-center">
       <section
-        class="p-12 bg-gray-925/25 w-1/2 rounded backdrop-blur-sm border border-gray-925"
+        class="pt-48 bg-gray-925/25 w-1/2 rounded backdrop-blur-sm border border-gray-925"
       >
         <img src="@/assets/logo-long.svg" alt="Vizor Logo" class="w-48 mb-12" />
         <h1 class="text-4xl mb-6">

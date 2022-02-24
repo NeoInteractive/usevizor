@@ -9,6 +9,12 @@ const routes = [
     meta: { requiresAuth: false, has_nav: true, has_foot: true },
   },
   {
+    path: "/m/:id",
+    name: "MatchScoreboard",
+    component: () => import("@/views/PublicMatch.vue"),
+    meta: { requiresAuth: false, has_nav: false, has_foot: false },
+  },
+  {
     path: "/beta/registered",
     name: "BetaRegistered",
     component: () => import("@/views/auth/BetaRegistered.vue"),
@@ -49,12 +55,6 @@ const routes = [
     name: "MatchAdmin",
     component: () => import("@/views/Match.vue"),
     meta: { requiresAuth: true, has_nav: true, has_foot: true },
-  },
-  {
-    path: "/m/:id",
-    name: "MatchScoreboard",
-    component: () => import("@/views/PublicMatch.vue"),
-    meta: { requiresAuth: false, has_nav: false, has_foot: false },
   },
   {
     path: "/:pathMatch(.*)*",

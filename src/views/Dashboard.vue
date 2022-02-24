@@ -9,7 +9,7 @@ let activeTab = ref("all-matches");
 </script>
 <template>
   <div class="bg-gray-925">
-    <div class="container-2xl mx-auto w-3/4 mt-12">
+    <div class="mx-auto w-3/4 max-w-screen-xl mt-12">
       <p class="text-heading font-bold text-4xl mb-6">Dashboard</p>
       <hr class="mb-0" />
       <div class="flex flex-row">

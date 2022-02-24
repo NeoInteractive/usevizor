@@ -57,7 +57,7 @@ onMounted(() => {
 </script>
 <template>
   <div v-if="matchData" class="bg-gray-925">
-    <div class="container-2xl mx-auto w-3/4 mt-12">
+    <div class="container-2xl mx-auto max-w-screen-xl mt-12">
       <p class="text-heading font-bold text-4xl mb-4">
         {{ matchData.heading }}
       </p>
