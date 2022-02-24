@@ -5,7 +5,7 @@ import { getFirestore } from "firebase/firestore";
 // import { useStore } from "@/stores/user.store";
 // const userStore = useStore();
 export const firebaseApp = initializeApp({
-  apiKey: "AIzaSyAjPdWLiTHaGYc_ZEiiLu3ZxD--YpI8b4g",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: "vizor-live.firebaseapp.com",
   projectId: "vizor-live",
   storageBucket: "vizor-live.appspot.com",
