@@ -6,10 +6,11 @@ import { useStore } from "@/stores/user.store";
 import { nanoid } from "nanoid";
 import Default from "@/components/scoreboards/Default.vue";
 import ColorInput from "vue-color-input";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 let matches = ref([]);
 let user = ref(null);
-
 let newMatch = reactive({
   id: nanoid(),
   heading: "Title",
@@ -46,53 +47,19 @@ let newMatch = reactive({
     sponsors: false,
   },
 });
-let demoMatch = {
-  id: nanoid(),
-  heading: "Lone Wolf Tournament",
-  subheading: "Best of 7",
-  status: "Live",
-  created_at: serverTimestamp(),
-  owner: undefined,
-  team_one: {
-    score: 0,
-    logo: "http://tinygraphs.com/labs/isogrids/hexa16/tinygraphs?theme=seascape&numcolors=4&size=220&fmt=svg",
-    name: "Lightning",
-    show_logo: true,
-    color: {
-      bg: "rgb(142, 28, 28)",
-      text: "rgb(255, 255, 255)",
-    },
-  },
-  team_two: {
-    score: 0,
-    logo: "http://tinygraphs.com/labs/isogrids/hexa16/tinygraphs?theme=seascape&numcolors=4&size=220&fmt=svg",
-    show_logo: true,
-    name: "Thunder",
-    color: {
-      bg: "rgb(30, 61, 159)",
-      text: "rgb(255, 255, 255)",
-    },
-  },
-  scoreboard: {
-    theme: "default",
-    dark: true,
-    show_heading: true,
-    show_subheading: true,
-    premium: false,
-    sponsors: false,
-  },
-};
 
 const createNewMatch = async () => {
   newMatch.owner = user.value.uid;
   await setDoc(doc(db, "matches", newMatch.id), newMatch);
-  alert("Match created");
+  router.push(`/dashboard/m/${newMatch.id}`);
 };
+
 const loadDemoMatch = () => {
   newMatch = demoMatch;
 };
 
 onMounted(() => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
   const { auth_data } = useStore();
   user.value = auth_data;
 });
@@ -114,7 +81,7 @@ onMounted(() => {
           <h2>Match Config</h2>
           <p>Creating a new Match will use one of your...</p>
         </div>
-        <Default class="mt-4" :matchData="newMatch" />
+        <Default />
 
         <div class="px-7 mt-6">
           <h3>

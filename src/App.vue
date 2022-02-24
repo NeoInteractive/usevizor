@@ -4,8 +4,11 @@ import { getUserState } from "@/firebase";
 import Navbar from "@/components/Navbar.vue";
 import Loading from "@/components/Loading.vue";
 import Footer from "@/components/Footer.vue";
+import { useRoute } from "vue-router";
 
+const route = useRoute();
 const isLoading = ref(true);
+
 getUserState().then(() => {
   isLoading.value = false;
 });
@@ -19,24 +22,15 @@ getUserState().then(() => {
     <Loading class="h-16 w-16" />
   </div>
   <div id="app-container" v-else class="flex flex-col">
-    <Navbar />
+    <Navbar v-if="route.meta.has_nav" />
     <router-view class="min-h-screen pb-12" v-slot="{ Component, route }">
-      <transition name="slide" mode="out-in">
-        <component :is="Component" :key="route.path" />
-      </transition>
+      <component :is="Component" :key="route.path" />
     </router-view>
-    <Footer />
+    <Footer v-if="route.meta.has_foot" />
   </div>
 </template>
 
 <style scoped>
-#app-container {
-  background: #07091b;
-  /* background: url(@/assets/blobs.png); */
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
 .slide-enter-active {
   transition: all 0.3s ease-out;
 }

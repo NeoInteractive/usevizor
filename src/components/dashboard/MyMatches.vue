@@ -6,6 +6,8 @@ import { useStore } from "@/stores/user.store";
 
 let matches = ref([]);
 let user = ref(null);
+let noMatches = ref(false);
+const emit = defineEmits(["createMatch"]);
 
 const getMatchData = () => {
   const { auth_data } = useStore();
@@ -15,6 +17,7 @@ const getMatchData = () => {
     const m = [];
     onSnapshot(q, (querySnapshot) => {
       querySnapshot.forEach((match) => m.push(match.data()));
+      if (m.length === 0) noMatches.value = true;
       matches.value = m;
     });
   }
@@ -32,7 +35,10 @@ onMounted(() => {
     <div class="flex flex-row justify-between mb-8 items-center">
       <h1 class="">My Matches</h1>
       <div>
-        <button class="btn">Create Match</button>
+        <code class="mr-6">{{ matches.length }} / 5 Matches Created</code>
+        <button @click="emit('createMatch')" class="btn btn-sm">
+          <i class="fa-solid fa-plus"></i>
+        </button>
       </div>
     </div>
     <div v-if="matches.length > 0" class="flex flex-row flex-wrap">
@@ -55,11 +61,11 @@ onMounted(() => {
         </h1>
       </router-link>
     </div>
-    <div v-else class="py-36 text-center">
-      <h3 class="text-white">
-        You haven't created any matches yet. Create one from the left menu to
-        view them here.
-      </h3>
+    <div v-if="noMatches" class="py-36 text-center">
+      <h3 class="text-white">You haven't created any matches yet.</h3>
+      <button @click="emit('createMatch')" class="btn btn-sm mt-6">
+        Create Match
+      </button>
     </div>
   </div>
 </template>

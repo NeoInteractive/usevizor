@@ -1,10 +1,23 @@
 <script setup>
-import { ref } from "vue";
-import { getTeamImage } from "@/helpers";
-const props = defineProps({
-  matchData: Object,
+import { db } from "@/firebase";
+import { doc, onSnapshot } from "firebase/firestore";
+import { ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
+
+let route = useRoute();
+let matchData = ref();
+
+function getMatchData() {
+  if (!route.params.id) return;
+  onSnapshot(
+    doc(db, "matches", route.params.id),
+    (doc) => (matchData.value = doc.data())
+  );
+}
+
+onMounted(() => {
+  getMatchData();
 });
-const matchData = ref(props.matchData);
 </script>
 
 <template>
@@ -12,27 +25,7 @@ const matchData = ref(props.matchData);
     <div id="sponsors-left" class="">
       <div
         v-if="matchData.scoreboard.sponsors"
-        class="text-center border-2 p-2"
-        :class="{
-          'bg-gray-200': !matchData.scoreboard.dark,
-          'bg-gray-925': matchData.scoreboard.dark,
-        }"
-      >
-        <h2
-          class="text-gray-900 title font-bold tracking-widest uppercase text-sm text-shadow-lg pt-0.5"
-          :class="{
-            'bg-gray-200': !matchData.scoreboard.dark,
-            'bg-gray-925': matchData.scoreboard.dark,
-          }"
-        >
-          sponsor-left
-        </h2>
-      </div>
-    </div>
-    <div id="main" class="flex flex-col">
-      <div
-        v-if="matchData.scoreboard.show_heading"
-        class="text-center border-2 border-b-0. rounded-tl-md rounded-tr-md py-.5"
+        class="text-center border-l-2 border-b-2 p-2 rounded-bl-md"
         :class="{
           'bg-gray-200': !matchData.scoreboard.dark,
           'border-gray-200': !matchData.scoreboard.dark,
@@ -41,7 +34,31 @@ const matchData = ref(props.matchData);
         }"
       >
         <h2
-          class="title font-bold tracking-widest uppercase text-sm text-shadow-lg pt-0.5"
+          class="text-gray-900 title font-bold tracking-widest uppercase text-sm text-shadow-lg p-1"
+          :class="{
+            'bg-gray-200': !matchData.scoreboard.dark,
+            'bg-gray-925': matchData.scoreboard.dark,
+            'text-gray-925': !matchData.scoreboard.dark,
+            'text-gray-200': matchData.scoreboard.dark,
+          }"
+        >
+          <img src="../../assets/ni.svg" class="w-28" alt="" />
+        </h2>
+      </div>
+    </div>
+    <div id="main" class="flex flex-col">
+      <div
+        v-if="matchData.scoreboard.show_heading"
+        class="text-center border-x-2 py-1"
+        :class="{
+          'bg-gray-200': !matchData.scoreboard.dark,
+          'border-gray-200': !matchData.scoreboard.dark,
+          'bg-gray-925': matchData.scoreboard.dark,
+          'border-gray-800': matchData.scoreboard.dark,
+        }"
+      >
+        <h2
+          class="title font-bold tracking-widest text-sm text-shadow-lg pt-0.5"
           :class="{
             'text-gray-925': !matchData.scoreboard.dark,
             'text-gray-200': matchData.scoreboard.dark,
@@ -53,10 +70,9 @@ const matchData = ref(props.matchData);
       <div class="flex flex-row">
         <div
           class="bg-gradient-to-t from-red-900 to-red-800 bg-opacity-95 border-l-2 border-b-2 rounded-bl-md w-64"
+          :style="`color: ${matchData.team_one.color.text}; background: ${matchData.team_one.color.bg};`"
           :class="{
-            'bg-gray-200': !matchData.scoreboard.dark,
             'border-gray-200': !matchData.scoreboard.dark,
-            'bg-gray-925': matchData.scoreboard.dark,
             'border-gray-800': matchData.scoreboard.dark,
           }"
         >
@@ -70,10 +86,7 @@ const matchData = ref(props.matchData);
                 />
                 <h2
                   class="font-bold text-xl tracking-wide pt-1.5 pl-2 text-shadow-lg"
-                  :class="{
-                    'text-gray-200': !matchData.scoreboard.dark,
-                    'text-white': matchData.scoreboard.dark,
-                  }"
+                  :style="`color: ${matchData.team_one.color.text};`"
                 >
                   {{ matchData.team_one.name }}
                 </h2>
@@ -82,10 +95,7 @@ const matchData = ref(props.matchData);
             <div class="col-span-1">
               <h2
                 class="text-shadow-md font-bold text-3xl tracking-wide pt-1 pr-2 text-shadow-lg text-right"
-                :class="{
-                  'text-gray-200': !matchData.scoreboard.dark,
-                  'text-white': matchData.scoreboard.dark,
-                }"
+                :style="`color: ${matchData.team_one.color.text};`"
               >
                 {{ matchData.team_one.score }}
               </h2>
@@ -94,10 +104,9 @@ const matchData = ref(props.matchData);
         </div>
         <div
           class="bg-gradient-to-t from-blue-900 to-blue-800 bg-opacity-95 border-r-2 border-b-2 rounded-br-md w-64"
+          :style="`color: ${matchData.team_two.color.text}; background: ${matchData.team_two.color.bg};`"
           :class="{
-            'bg-gray-200': !matchData.scoreboard.dark,
             'border-gray-200': !matchData.scoreboard.dark,
-            'bg-gray-925': matchData.scoreboard.dark,
             'border-gray-800': matchData.scoreboard.dark,
           }"
         >
@@ -105,10 +114,7 @@ const matchData = ref(props.matchData);
             <div class="col-span-1">
               <h2
                 class="text-shadow-md font-bold text-3xl tracking-wide pt-1 pl-2 text-shadow-lg"
-                :class="{
-                  'text-gray-200': !matchData.scoreboard.dark,
-                  'text-white': matchData.scoreboard.dark,
-                }"
+                :style="`color: ${matchData.team_two.color.text};`"
               >
                 {{ matchData.team_two.score }}
               </h2>
@@ -117,10 +123,7 @@ const matchData = ref(props.matchData);
               <div class="flex flex-row justify-end">
                 <h2
                   class="text-shadow-md font-bold text-xl tracking-wide pt-1.5 pr-2 text-shadow-lg"
-                  :class="{
-                    'text-gray-200': !matchData.scoreboard.dark,
-                    'text-white': matchData.scoreboard.dark,
-                  }"
+                  :style="`color: ${matchData.team_two.color.text};`"
                 >
                   {{ matchData.team_two.name }}
                 </h2>
@@ -138,12 +141,48 @@ const matchData = ref(props.matchData);
     <div id="sponsors-right" class="">
       <div
         v-if="matchData.scoreboard.sponsors"
-        class="text-center bg-gray-200 border-r-2 border-l-2 border-b-2"
+        class="text-center border-r-2 border-b-2 p-2 rounded-br-md"
+        :class="{
+          'bg-gray-200': !matchData.scoreboard.dark,
+          'border-gray-200': !matchData.scoreboard.dark,
+          'bg-gray-925': matchData.scoreboard.dark,
+          'border-gray-800': matchData.scoreboard.dark,
+        }"
       >
         <h2
-          class="text-gray-900 title font-bold tracking-widest uppercase text-sm text-shadow-lg pt-0.5"
+          class="text-gray-900 title font-bold tracking-widest uppercase text-sm text-shadow-lg p-1"
+          :class="{
+            'bg-gray-200': !matchData.scoreboard.dark,
+            'bg-gray-925': matchData.scoreboard.dark,
+            'text-gray-925': !matchData.scoreboard.dark,
+            'text-gray-200': matchData.scoreboard.dark,
+          }"
         >
-          sponsor-right
+          <img src="../../assets/logo-long.svg" class="w-28" alt="" />
+        </h2>
+      </div>
+    </div>
+  </div>
+  <div v-if="matchData" class="flex flex-row w-full justify-center">
+    <div id="main" class="flex flex-col">
+      <div
+        v-if="matchData.scoreboard.show_subheading"
+        class="text-center border-x-2 py-1 px-4"
+        :class="{
+          'bg-gray-200': !matchData.scoreboard.dark,
+          'border-gray-200': !matchData.scoreboard.dark,
+          'bg-gray-925': matchData.scoreboard.dark,
+          'border-gray-800': matchData.scoreboard.dark,
+        }"
+      >
+        <h2
+          class="title font-bold tracking-widest text-xs text-shadow-lg pt-0.5"
+          :class="{
+            'text-gray-925': !matchData.scoreboard.dark,
+            'text-gray-200': matchData.scoreboard.dark,
+          }"
+        >
+          {{ matchData.subheading || "Default Subheading" }}
         </h2>
       </div>
     </div>

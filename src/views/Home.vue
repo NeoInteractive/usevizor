@@ -1,13 +1,20 @@
-<script setup lang="ts">
-import { ref } from "vue";
+<script setup>
+import { ref, onMounted } from "vue";
 import { isValidEmail } from "../helpers";
 import axios from "axios";
 import Botpoison from "@botpoison/browser";
+import { useRouter } from "vue-router";
+
+import { useAuthState } from "@/firebase";
+const { user } = useAuthState();
+
 let email = ref("");
 let loading = ref(false);
 const poison = new Botpoison({
   publicKey: "pk_5bbce72f-525d-4a56-b386-75b7fe7fedda",
 });
+const router = useRouter();
+
 const submitForm = async () => {
   loading.value = true;
   try {
@@ -25,6 +32,10 @@ const submitForm = async () => {
     loading.value = false;
   }
 };
+
+onMounted(() => {
+  if (user) router.push("/dashboard");
+});
 </script>
 <template>
   <div class="t-main-set flex-1 grid place-items-center">

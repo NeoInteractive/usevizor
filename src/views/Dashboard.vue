@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { useAuthState } from "@/firebase";
-import AllMatches from "../components/dashboard/AllMatches.vue";
+import MyMatches from "../components/dashboard/MyMatches.vue";
 import CreateMatch from "../components/dashboard/CreateMatch.vue";
 
 const { user } = useAuthState();
@@ -71,7 +71,10 @@ let activeTab = ref("all-matches");
           </div>
         </div>
         <div v-if="user" class="w-full p-8">
-          <all-matches v-if="activeTab == 'all-matches'" />
+          <my-matches
+            v-if="activeTab == 'all-matches'"
+            @create-match="activeTab = 'create-match'"
+          />
           <create-match v-if="activeTab == 'create-match'" />
         </div>
       </div>
