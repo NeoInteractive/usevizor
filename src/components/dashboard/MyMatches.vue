@@ -1,12 +1,21 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { db } from "@/firebase";
-import { collection, query, where, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  onSnapshot,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
 import { useStore } from "@/stores/user.store";
-
+import { useRouter } from "vue-router";
+const router = useRouter();
 let matches = ref([]);
 let user = ref(null);
 let noMatches = ref(false);
+let deleteMode = ref(false);
 const emit = defineEmits(["createMatch"]);
 
 const getMatchData = () => {
@@ -21,6 +30,11 @@ const getMatchData = () => {
       matches.value = m;
     });
   }
+};
+
+const deleteMatch = async (id) => {
+  await deleteDoc(doc(db, "matches", id));
+  getMatchData();
 };
 
 onMounted(() => {
@@ -45,10 +59,11 @@ onMounted(() => {
           <i class="fa-solid fa-plus"></i>
         </button>
         <button
-          @click="emit('createMatch')"
+          @click="deleteMode = !deleteMode"
           class="py-1 px-4 rounded text-red-400"
         >
-          <i class="fa-solid fa-trash"></i>
+          <i v-show="!deleteMode" class="fa-solid fa-trash"></i>
+          <i v-show="deleteMode" class="fa-solid fa-check"></i>
         </button>
       </div>
     </div>
@@ -58,15 +73,21 @@ onMounted(() => {
       >
         Free Matches
       </h2>
-      <router-link
-        tag="div"
-        :to="`/dashboard/m/${match.id}`"
+      <article
         v-for="match in matches"
         :key="match.id"
         class="sm:w-full lg:w-1/2 xl:w-1/3 p-2"
         v-show="!match.scoreboard.premium"
       >
+        <span
+          v-if="deleteMode"
+          class="bg-red-400 text-white px-2 py-1 rounded-t text-xs font-semibold uppercase tracking-widest cursor-pointer"
+          @click="deleteMatch(match.id)"
+        >
+          Delete
+        </span>
         <div
+          @click="router.replace(`/dashboard/m/${match.id}`)"
           class="h-28 bg-gray-950 border border-gray-500 p-4 flex flex-col justify-between cursor-pointer hover:bg-gray-925 hover:border-indigo-400 transition active:bg-violet-700"
         >
           <div class="flex flex-row justify-between">
@@ -80,7 +101,7 @@ onMounted(() => {
             {{ match.status }} | {{ match.id.toUpperCase() }}
           </h1>
         </div>
-      </router-link>
+      </article>
       <h2
         class="subheading w-full mb-6 text-sm tracking-widest text-indigo-400 font-bold uppercase mt-12"
       >
