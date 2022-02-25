@@ -1,9 +1,9 @@
 <script setup>
-import Default from "@/components/scoreboards/Default.vue";
+import ScoreboardDefault from "@/components/scoreboards/ScoreboardDefault.vue";
 </script>
 
 <template>
-  <Default />
+  <ScoreboardDefault />
 </template>
 <style scoped>
 html,
