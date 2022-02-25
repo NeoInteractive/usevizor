@@ -1,11 +1,13 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { db } from "@/firebase";
 import { doc, onSnapshot, updateDoc, increment } from "firebase/firestore";
+import { db } from "@/firebase";
 import { useStore } from "@/stores/user.store";
 import { useRoute } from "vue-router";
+import { useToast } from "vue-toastification";
 import ScoreboardDefault from "@/components/scoreboards/ScoreboardDefault.vue";
 
+const toast = useToast();
 const route = useRoute();
 let matchData = ref(undefined);
 let user = ref(null);
@@ -48,7 +50,10 @@ const resetScore = (team) => {
     });
   }
 };
-
+const copy = (text) => {
+  navigator.clipboard.writeText(text);
+  toast.success("OBS Overlay URL copied to clipboard!");
+};
 onMounted(() => {
   const { auth_data } = useStore();
   user.value = auth_data;
@@ -57,12 +62,16 @@ onMounted(() => {
 </script>
 <template>
   <div v-if="matchData" class="bg-gray-925">
-    <div class="container-2xl mx-auto max-w-screen-xl mt-12">
-      <p class="text-heading font-bold text-4xl mb-4">
-        {{ matchData.heading }}
+    <div class="container-2xl mx-auto max-w-screen-xl">
+      <p
+        class="text-heading text-3xl px-4 py-12 border border-gray-500 bg-gradient-to-r from-indigo-900 to-gray-950"
+      >
+        {{
+          matchData.heading == "" ? `Match: ${matchData.id}` : matchData.heading
+        }}
       </p>
       <div
-        class="flex flex-row justify-between mt-4 items-center bg-gray-950 p-4 rounded-t-md"
+        class="flex flex-row justify-between items-center bg-gray-950 p-4 border-x border-gray-500"
       >
         <router-link
           to="/dashboard/"
@@ -70,26 +79,83 @@ onMounted(() => {
         >
           <i class="fa-solid fa-arrow-left mr-2" />Dashboard
         </router-link>
-        <code
-          class="text-heading text-indigo-300 text-sm opacity-50 hover:text-indigo-300 hover:opacity-100"
-        >
-          {{ matchData.id }}
-        </code>
+        <div class="text-heading text-white text-sm flex flex-row items-center">
+          <p class="text-xs mr-4">Scoreboard preview background color:</p>
+          <select class="select select-bordered select-xs select-ghost">
+            <option disabled>----</option>
+            <option selected value="default">Dark</option>
+          </select>
+        </div>
       </div>
-
-      <hr class="my-0" />
-      <div class="pt-6 pb-6 mb-12 rounded-b-md bg-gray-900">
+      <div class="pt-6 pb-6 mb-12 bg-gray-950 border border-gray-500">
         <scoreboard-default />
       </div>
       <div class="w-full flex flex-row">
-        <div class="p-4 w-1/2">
+        <div class="w-2/5">
+          <h1 class="text-2xl text-heading text-indigo-100">
+            Match Information
+          </h1>
+          <div
+            class="bg-gray-950 p-4 border border-gray-500 mt-4 flex flex-col justify-between"
+          >
+            <div class="flex flex-row w-full justify-between mb-6">
+              <h3 class="font-bold tracking-wide text-gray-100">Heading:</h3>
+              <h3>{{ matchData.heading }}</h3>
+            </div>
+            <div class="flex flex-row w-full justify-between mb-6">
+              <h3 class="font-bold tracking-wide text-gray-100">Subheading:</h3>
+              <h3>
+                {{ matchData.subheading }}
+                <span
+                  class="text-amber-300"
+                  v-if="
+                    matchData.subheading == '' &&
+                    matchData.scoreboard.show_subheading
+                  "
+                >
+                  Visible, but no value set
+                </span>
+              </h3>
+            </div>
+            <div class="flex flex-row w-full justify-between mb-6">
+              <h3 class="font-bold tracking-wide text-gray-100">
+                Scoreboard Theme:
+              </h3>
+              <h3>{{ matchData.scoreboard.theme || "-" }}</h3>
+            </div>
+            <div class="flex flex-row w-full justify-between mb-6">
+              <h3 class="font-bold tracking-wide text-gray-100">Dark Mode:</h3>
+              <h3>
+                {{ matchData.scoreboard.dark === true ? "Active" : "Disabled" }}
+              </h3>
+            </div>
+          </div>
+          <h1 class="text-2xl text-heading text-indigo-100 mt-12">
+            Scoreboard Links
+          </h1>
+          <div
+            class="bg-gray-950 p-4 border border-gray-500 mt-4 flex flex-col justify-between"
+          >
+            <div class="flex flex-col w-full justify-between">
+              <h3 class="font-bold tracking-wide">OBS Overlay URL:</h3>
+              <div class="items-center">
+                <code
+                  @click="copy(`https://usevizor.com/m/${matchData.id}`)"
+                  class="text-xs font-bold text-cyan-400 cursor-pointer"
+                >
+                  https://usevizor.com/m/{{ matchData.id }}
+                </code>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pl-6 w-full">
           <h1 class="text-2xl text-heading text-indigo-100 ml-2">Scores</h1>
-          <div class="bg-gray-950 p-4 border border-gray-500 rounded mt-4">
+          <div class="bg-gray-950 border border-gray-500 mt-4">
             <div class="flex flex-row justify-between">
-              <div class="w-1/2 select-none">
+              <div class="w-1/2 select-none border-r border-gray-500">
                 <div
                   class="w-full py-3 text-center font-bold tracking-wider border border-2 border-gray-800"
-                  :style="`color: ${matchData.team_one.color.text}; background: ${matchData.team_one.color.bg};`"
                 >
                   {{ matchData.team_one.name }}
                 </div>
@@ -98,7 +164,7 @@ onMounted(() => {
                 >
                   {{ matchData.team_one.score }}
                 </div>
-                <div v-if="matchData" class="mt-4 px-1 text-gray-300">
+                <div v-if="matchData" class="p-2 text-gray-300">
                   <div class="flex flex-row w-full">
                     <div
                       @click="updateScore('team_one', 'sub')"
@@ -138,7 +204,6 @@ onMounted(() => {
               <div class="w-1/2 select-none">
                 <div
                   class="w-full py-3 text-center font-bold tracking-wider border border-2 border-gray-800"
-                  :style="`color: ${matchData.team_two.color.text}; background: ${matchData.team_two.color.bg};`"
                 >
                   {{ matchData.team_two.name }}
                 </div>
@@ -147,7 +212,7 @@ onMounted(() => {
                 >
                   {{ matchData.team_two.score }}
                 </div>
-                <div v-if="matchData" class="mt-4 px-1 text-gray-300">
+                <div v-if="matchData" class="p-2 text-gray-300">
                   <div class="flex flex-row w-full">
                     <div
                       @click="updateScore('team_two', 'sub')"
@@ -186,53 +251,31 @@ onMounted(() => {
               </div>
             </div>
           </div>
-        </div>
-        <div class="p-4 w-1/2">
-          <h1 class="text-2xl text-heading text-indigo-100">
-            Match Information
-          </h1>
-          <div
-            class="bg-gray-950 p-4 border border-gray-500 rounded-md mt-4 flex flex-col justify-between"
-          >
-            <div class="flex flex-row w-full justify-between mb-6">
-              <h3 class="font-bold tracking-wide text-gray-100">Heading:</h3>
-              <h3>{{ matchData.heading }}</h3>
-            </div>
-            <div class="flex flex-row w-full justify-between mb-6">
-              <h3 class="font-bold tracking-wide text-gray-100">Subheading:</h3>
-              <h3>
-                {{ matchData.subheading }}
-                <span class="text-amber-300" v-if="matchData.subheading == ''">
-                  Visible, but no value set
-                </span>
-              </h3>
-            </div>
-            <div class="flex flex-row w-full justify-between mb-6">
-              <h3 class="font-bold tracking-wide text-gray-100">
-                Scoreboard Theme:
-              </h3>
-              <h3>{{ matchData.scoreboard.theme || "-" }}</h3>
-            </div>
-            <div class="flex flex-row w-full justify-between mb-6">
-              <h3 class="font-bold tracking-wide text-gray-100">Dark Mode:</h3>
-              <h3>
-                {{ matchData.scoreboard.dark === true ? "Active" : "Disabled" }}
-              </h3>
-            </div>
-          </div>
           <h1 class="text-2xl text-heading text-indigo-100 mt-12">
-            Scoreboard Links
+            Edit Match Data
           </h1>
           <div
-            class="bg-gray-950 p-4 border border-gray-500 rounded-md mt-4 flex flex-col justify-between"
+            class="bg-gray-950 p-4 border border-gray-500 mt-4 flex flex-col justify-between"
           >
-            <div class="flex flex-row w-full justify-between">
-              <h3 class="font-bold tracking-wide">OBS Overlay URL:</h3>
-              <div class="items-center">
-                <code class="text-sm font-bold text-cyan-400">
-                  https://usevizor.com/m/{{ matchData.id }}
-                </code>
+            <div class="flex flex-row w-full justify-between mb-4">
+              <div class="flex items-center">
+                <h3 class="font-bold">Heading:</h3>
               </div>
+              <input
+                type="text"
+                placeholder="Type here"
+                class="input w-full max-w-xs"
+              />
+            </div>
+            <div class="flex flex-row w-full justify-between mb-4">
+              <div class="flex items-center">
+                <h3 class="font-bold">Subheading:</h3>
+              </div>
+              <input
+                type="text"
+                placeholder="Type here"
+                class="input w-full max-w-xs"
+              />
             </div>
           </div>
         </div>

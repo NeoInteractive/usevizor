@@ -26,3 +26,7 @@ export const getTeamImage = (team, name) => {
       break;
   }
 };
+
+export const copyToClipboard = (text) => {
+  navigator.clipboard.writeText(text);
+};

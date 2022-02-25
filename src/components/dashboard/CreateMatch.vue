@@ -22,7 +22,7 @@ let matches = ref();
 let user = ref(null);
 let newMatch = reactive({
   id: nanoid(),
-  heading: "Title",
+  heading: "VIZOR Invitational",
   subheading: "",
   status: "active",
   created_at: serverTimestamp(),
@@ -51,7 +51,7 @@ let newMatch = reactive({
     theme: "default",
     dark: true,
     show_heading: true,
-    show_subheading: true,
+    show_subheading: false,
     premium: false,
     sponsors: false,
   },
@@ -124,23 +124,6 @@ onMounted(() => {
           <h3>General Options</h3>
           <hr class="border-gray-500" />
         </div>
-
-        <div class="flex flex-row px-8 py-2 mb-6">
-          <div class="w-1/2">
-            <h3 class="text-indigo-100 mb-2">Pricing Plan</h3>
-          </div>
-          <div class="w-1/2 flex flex-col justify-center">
-            <select
-              v-model="newMatch.scoreboard.premium"
-              name="bg-color"
-              id="bg-color"
-              class="w-full h-12 rounded bg-gray-925 border border-gray-500 px-4 py-2"
-            >
-              <option :value="false" selected>Free</option>
-              <option disabled :value="true">Pro</option>
-            </select>
-          </div>
-        </div>
         <div class="flex flex-row px-8 py-2">
           <div class="w-1/2">
             <h3 class="text-indigo-100 mb-2">Heading</h3>
@@ -204,7 +187,7 @@ onMounted(() => {
               class="select w-full select-bordered"
             >
               <option disabled>----</option>
-              <option selected value="default">Free</option>
+              <option selected value="default">Default</option>
             </select>
           </div>
         </div>
@@ -240,7 +223,7 @@ onMounted(() => {
             </label>
           </div>
         </div>
-        <div class="flex flex-row p-8">
+        <!-- <div class="flex flex-row p-8">
           <div class="w-1/2">
             <h3 class="text-indigo-100 mb-2">
               <span class="badge badge-secondary badge-sm mr-2">Pro</span>
@@ -261,7 +244,7 @@ onMounted(() => {
               </label>
             </div>
           </div>
-        </div>
+        </div> -->
         <!-- -->
         <!-- TEAM ONE -->
         <!-- -->

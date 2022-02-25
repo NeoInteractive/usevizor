@@ -13,7 +13,7 @@ let activeTab = ref("all-matches");
   <div class="bg-gray-925">
     <div class="mx-auto 2xl:w-3/4 xl:w-full max-w-screen-xl">
       <p
-        class="text-heading text-3xl p-3 border-x border-gray-500 bg-gradient-to-r from-indigo-900 to-gray-950"
+        class="text-heading tracking-wide font-bold text-3xl p-12 border-x border-gray-500 bg-gradient-to-r from-indigo-900 to-gray-950"
       >
         Dashboard
       </p>

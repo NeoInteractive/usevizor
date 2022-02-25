@@ -24,12 +24,6 @@ const goToHome = () => {
 
       <div class="hidden md:block" v-if="user">
         <router-link
-          :to="{ name: 'Home' }"
-          class="nav-link t-transition-effect"
-        >
-          Home
-        </router-link>
-        <router-link
           :to="{ name: 'Dashboard' }"
           class="nav-link t-transition-effect"
         >
@@ -50,7 +44,7 @@ const goToHome = () => {
           :to="{ name: 'Login' }"
           class="nav-link t-transition-effect"
         >
-          Beta Access Login
+          Login
         </router-link>
       </div>
       <div class="block md:hidden">
