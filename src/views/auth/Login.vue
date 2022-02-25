@@ -9,7 +9,6 @@ import { useStore } from "@/stores/user.store";
 const auth = getAuth();
 const router = useRouter();
 const userStore = useStore();
-console.log(userStore.auth_data);
 const loading = ref(false);
 const error = ref("");
 
@@ -39,7 +38,7 @@ const handleSubmit = async (e) => {
 </script>
 
 <template>
-  <div class="bg-gray-900 pt-24">
+  <div class="bg-gray-925 pt-24">
     <div class="t-main-set flex-1 grid place-items-center">
       <section
         class="p-12 bg-gray-950/25 w-1/2 rounded backdrop-blur-sm border border-gray-925"

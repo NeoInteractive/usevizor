@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-900 pt-24">
+  <div class="bg-gray-950 pt-24">
     <div class="t-main-set flex-1 grid place-items-center">
       <section
         class="p-12 bg-gray-950/25 w-1/2 rounded backdrop-blur-sm border border-gray-925"

@@ -46,6 +46,12 @@ const goToHome = () => {
         >
           Login
         </router-link>
+        <router-link
+          :to="{ name: 'SignUp' }"
+          class="nav-link t-transition-effect"
+        >
+          Create an Account
+        </router-link>
       </div>
       <div class="block md:hidden">
         <Menu />
