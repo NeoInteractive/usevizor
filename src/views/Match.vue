@@ -4,7 +4,7 @@ import { db } from "@/firebase";
 import { doc, onSnapshot, updateDoc, increment } from "firebase/firestore";
 import { useStore } from "@/stores/user.store";
 import { useRoute } from "vue-router";
-import Default from "../components/scoreboards/Default.vue";
+import ScoreboardDefault from "@/components/scoreboards/ScoreboardDefault.vue";
 
 const route = useRoute();
 let matchData = ref(undefined);
@@ -65,10 +65,10 @@ onMounted(() => {
         class="flex flex-row justify-between mt-4 items-center bg-gray-950 p-4 rounded-t-md"
       >
         <router-link
-          to="/dashboard"
-          class="text-heading text-sm opacity-50 hover:text-indigo-400 hover:opacity-100 hover:font-bold"
+          to="/dashboard/"
+          class="text-heading text-sm opacity-80 tracking-wider hover:text-indigo-400 hover:opacity-100 hover:font-bold"
         >
-          <i class="fa-solid fa-arrow-left mr-2"></i>Back to Dashboard
+          <i class="fa-solid fa-arrow-left mr-2" />Dashboard
         </router-link>
         <code
           class="text-heading text-indigo-300 text-sm opacity-50 hover:text-indigo-300 hover:opacity-100"
@@ -79,7 +79,7 @@ onMounted(() => {
 
       <hr class="my-0" />
       <div class="pt-6 pb-6 mb-12 rounded-b-md bg-gray-900">
-        <default />
+        <scoreboard-default />
       </div>
       <div class="w-full flex flex-row">
         <div class="p-4 w-1/2">

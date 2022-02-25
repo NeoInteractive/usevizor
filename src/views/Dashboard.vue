@@ -1,8 +1,10 @@
 <script setup>
 import { ref } from "vue";
 import { useAuthState } from "@/firebase";
-import MyMatches from "../components/dashboard/MyMatches.vue";
-import CreateMatch from "../components/dashboard/CreateMatch.vue";
+import MyMatches from "@/components/dashboard/MyMatches.vue";
+import CreateMatch from "@/components/dashboard/CreateMatch.vue";
+import About from "@/components/dashboard/About.vue";
+import Changelog from "@/components/dashboard/Changelog.vue";
 
 const { user } = useAuthState();
 let activeTab = ref("all-matches");
@@ -61,12 +63,14 @@ let activeTab = ref("all-matches");
                 App
               </h3>
               <p
-                class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer opacity-50"
+                class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer"
+                @click="activeTab = 'changelog'"
               >
                 Changelog
               </p>
               <p
-                class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer opacity-50"
+                class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer"
+                @click="activeTab = 'about'"
               >
                 About
               </p>
@@ -82,6 +86,8 @@ let activeTab = ref("all-matches");
             v-if="activeTab == 'create-match'"
             @match-created="activeTab = 'all-matches'"
           />
+          <changelog v-if="activeTab == 'changelog'" />
+          <about v-if="activeTab == 'about'" />
         </div>
       </div>
     </div>

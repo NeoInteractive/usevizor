@@ -12,12 +12,12 @@ export const firebaseApp = initializeApp({
   messagingSenderId: "110124175099",
   appId: "1:110124175099:web:d5757cb6afe6a3c93f2a5e",
 });
+
 export const useAuthState = () => {
   const user = ref(null);
   const error = ref(null);
   const auth = getAuth();
   let unsubscribe;
-
   onMounted(() => {
     unsubscribe = onAuthStateChanged(
       auth,
@@ -25,9 +25,7 @@ export const useAuthState = () => {
       (e) => (error.value = e)
     );
   });
-
   onUnmounted(() => unsubscribe());
-
   const isAuthenticated = computed(() => user.value != null);
   return { user, error, isAuthenticated };
 };

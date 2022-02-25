@@ -4,7 +4,7 @@ import { db } from "@/firebase";
 import { useToast } from "vue-toastification";
 import { useStore } from "@/stores/user.store";
 import { nanoid } from "nanoid";
-import Default from "@/components/scoreboards/Default.vue";
+import ScoreboardDefault from "@/components/scoreboards/ScoreboardDefault.vue";
 import ColorInput from "vue-color-input";
 import {
   doc,
@@ -118,15 +118,10 @@ onMounted(() => {
       <div
         class="w-full bg-gray-950 border border-gray-500 flex flex-col justify-between"
       >
-        <Default />
+        <scoreboard-default :localMatchData="newMatch" />
 
         <div class="px-7 mt-6">
-          <h3>
-            General Options
-            <span @click="loadDemoMatch()" class="ml-6 text-xs cursor-pointer">
-              Demo Config
-            </span>
-          </h3>
+          <h3>General Options</h3>
           <hr class="border-gray-500" />
         </div>
 
