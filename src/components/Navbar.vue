@@ -67,6 +67,6 @@ const goToHome = () => {
   backdrop-filter backdrop-blur-sm border-b border-indigo-500;
 }
 .nav-link {
-  @apply py-2 px-4 ml-2 font-heading rounded text-indigo-100;
+  @apply py-2 px-4 ml-2 font-heading rounded text-white;
 }
 </style>
