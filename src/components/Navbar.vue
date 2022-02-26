@@ -34,6 +34,7 @@ onMounted(() => {
         <div class="py-2 px-4 ml-4 font-heading inline">
           {{ userAuth.displayName }}
           <div
+            v-if="userProfile"
             class="tooltip"
             v-show="userProfile.verified"
             data-tip="Verified"
@@ -43,7 +44,12 @@ onMounted(() => {
               <i class="fa fa-badge-check fa-stack-1x fa-inverse text-black" />
             </span>
           </div>
-          <div class="tooltip" v-show="userProfile.pro" data-tip="Pro Plan">
+          <div
+            v-if="userProfile"
+            class="tooltip"
+            v-show="userProfile.pro"
+            data-tip="Pro Plan"
+          >
             <span class="fa-stack">
               <i class="fa-solid fa-square fa-stack text-cyan-400" />
               <i
