@@ -251,7 +251,7 @@ onMounted(() => {
               </div>
             </div>
           </div>
-          <h1 class="text-2xl text-heading text-indigo-100 mt-12">
+          <!-- <h1 class="text-2xl text-heading text-indigo-100 mt-12">
             Edit Match Data
           </h1>
           <div
@@ -277,7 +277,7 @@ onMounted(() => {
                 class="input w-full max-w-xs"
               />
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
