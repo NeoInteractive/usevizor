@@ -241,10 +241,17 @@ onMounted(() => {
             </div>
           </div>
           <div class="flex justify-center py-12">
-            <button disabled @click="activeTab--" class="btn btn-sm btn-ghost">
+            <button
+              disabled
+              @click="activeTab--"
+              class="btn btn-sm btn-ghost mr-4"
+            >
               Back
             </button>
-            <button @click="activeTab++" class="btn btn-sm btn-wide">
+            <button
+              @click="activeTab++"
+              class="btn btn-sm btn-primary btn-wide"
+            >
               Next Step
             </button>
           </div>
@@ -361,10 +368,13 @@ onMounted(() => {
             </div>
           </div>
           <div class="flex justify-center py-12">
-            <button @click="activeTab--" class="btn btn-sm btn-ghost">
+            <button @click="activeTab--" class="btn btn-sm btn-ghost mr-4">
               Back
             </button>
-            <button @click="activeTab++" class="btn btn-sm btn-wide">
+            <button
+              @click="activeTab++"
+              class="btn btn-sm btn-primary btn-wide"
+            >
               Next Step
             </button>
           </div>
@@ -481,10 +491,13 @@ onMounted(() => {
             </div>
           </div>
           <div class="flex justify-center py-12">
-            <button @click="activeTab--" class="btn btn-sm btn-ghost">
+            <button @click="activeTab--" class="btn btn-sm btn-ghost mr-4">
               Back
             </button>
-            <button @click="activeTab++" class="btn btn-sm btn-wide">
+            <button
+              @click="activeTab++"
+              class="btn btn-sm btn-primary btn-wide"
+            >
               Next Step
             </button>
           </div>
@@ -492,6 +505,7 @@ onMounted(() => {
         <section v-show="activeTab == 4" id="finish" class="px-28 my-12">
           <h1 class="pb-8">Finish</h1>
           <div class="flex justify-center py-12">
+            <button @click="activeTab--" class="btn">Back</button>
             <button @click="createNewMatch" class="btn btn-wide">
               Create Match
             </button>
@@ -502,9 +516,6 @@ onMounted(() => {
   </div>
 </template>
 <style>
-.btn {
-  @apply py-2 px-4 ml-2 font-heading rounded bg-indigo-500 text-white;
-}
 .color-input.user .box {
   width: 100px;
   height: 48px;
