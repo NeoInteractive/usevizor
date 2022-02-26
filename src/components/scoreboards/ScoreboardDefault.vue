@@ -80,7 +80,7 @@ onMounted(() => {
               'text-gray-200': matchData.scoreboard.dark,
             }"
           >
-            {{ matchData.heading }}
+            {{ matchData.heading || "Default Heading" }}
           </h2>
         </div>
         <div class="flex flex-row">

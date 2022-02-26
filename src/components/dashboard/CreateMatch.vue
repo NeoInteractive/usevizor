@@ -23,7 +23,7 @@ let user = ref(null);
 let activeTab = ref(1);
 let newMatch = reactive({
   id: nanoid(),
-  heading: "VIZOR Invitational",
+  heading: "",
   subheading: "",
   status: "active",
   created_at: serverTimestamp(),
@@ -137,13 +137,14 @@ onMounted(() => {
             Finish
           </li>
         </ul>
-        <section v-show="activeTab == 1" id="matchOptions" class="px-28 my-12">
+        <section v-show="activeTab == 1" id="matchOptions" class="px-28 my-6">
+          <h1 class="pb-8">Match Options</h1>
           <div class="flex flex-row px-8 py-2">
             <div class="w-1/2">
               <h3 class="text-indigo-100 mb-2">Heading</h3>
               <p class="text-xs w-72 opacity-90">
-                Give a name for your match. Keep this to less than 30
-                characters.
+                Give a name for your match. Try to keep this less than 40
+                characters, with an absolute max of 56.
               </p>
             </div>
             <div class="w-1/2 flex flex-col justify-center">
@@ -168,7 +169,8 @@ onMounted(() => {
             <div class="w-1/2">
               <h3 class="text-indigo-100 mb-2">Subheading</h3>
               <p class="text-xs w-72 opacity-90">
-                Very short description of your match type.
+                A free-text line that spans the width of the scoreboard on the
+                bottom.
               </p>
             </div>
             <div class="w-1/2 flex flex-col justify-center">
@@ -248,6 +250,7 @@ onMounted(() => {
           </div>
         </section>
         <section v-show="activeTab == 2" id="teamOne" class="px-28 my-12">
+          <h1 class="pb-8">Team One</h1>
           <div class="flex flex-row px-8 py-2">
             <div class="w-1/2">
               <h3 class="text-indigo-100 mb-2">Name</h3>
@@ -266,11 +269,34 @@ onMounted(() => {
           </div>
           <div class="flex flex-row p-8">
             <div class="w-1/2">
+              <h3 class="text-indigo-100 mb-2">Team Logo Visibility</h3>
+              <p class="text-xs w-72 opacity-90">
+                Show or hide the team logo on the scoreboard.
+              </p>
+            </div>
+            <div class="w-1/2 flex">
+              <div class="form-control">
+                <label class="cursor-pointer label">
+                  <span class="label-text mr-8">Show logo?</span>
+                  <input
+                    v-model="newMatch.team_one.show_logo"
+                    type="checkbox"
+                    class="toggle"
+                    checked
+                  />
+                </label>
+              </div>
+            </div>
+          </div>
+          <div
+            class="flex flex-row p-8"
+            :class="{ 'opacity-40': !newMatch.team_one.show_logo }"
+          >
+            <div class="w-1/2">
               <h3 class="text-indigo-100 mb-2">Team Logo</h3>
               <p class="text-xs w-72 opacity-90">
                 A direct link (URL) to this team's image logo. Square logos are
-                <strong>highly</strong> recommended. If no link is provided, a
-                default logo will be used.
+                <strong>highly</strong> recommended.
               </p>
             </div>
             <div class="w-1/2 flex justify-center">
@@ -344,6 +370,7 @@ onMounted(() => {
           </div>
         </section>
         <section v-show="activeTab == 3" id="teamTwo" class="px-28 my-12">
+          <h1 class="pb-8">Team Two</h1>
           <div class="flex flex-row px-8 py-2">
             <div class="w-1/2">
               <h3 class="text-indigo-100 mb-2">Name</h3>
@@ -361,6 +388,30 @@ onMounted(() => {
             </div>
           </div>
           <div class="flex flex-row p-8">
+            <div class="w-1/2">
+              <h3 class="text-indigo-100 mb-2">Team Logo Visibility</h3>
+              <p class="text-xs w-72 opacity-90">
+                Show or hide the team logo on the scoreboard.
+              </p>
+            </div>
+            <div class="w-1/2 flex">
+              <div class="form-control">
+                <label class="cursor-pointer label">
+                  <span class="label-text mr-8">Show logo?</span>
+                  <input
+                    v-model="newMatch.team_two.show_logo"
+                    type="checkbox"
+                    class="toggle"
+                    checked
+                  />
+                </label>
+              </div>
+            </div>
+          </div>
+          <div
+            class="flex flex-row p-8"
+            :class="{ 'opacity-40': !newMatch.team_two.show_logo }"
+          >
             <div class="w-1/2">
               <h3 class="text-indigo-100 mb-2">Team Logo</h3>
               <p class="text-xs w-72 opacity-90">
@@ -439,6 +490,7 @@ onMounted(() => {
           </div>
         </section>
         <section v-show="activeTab == 4" id="finish" class="px-28 my-12">
+          <h1 class="pb-8">Finish</h1>
           <div class="flex justify-center py-12">
             <button @click="createNewMatch" class="btn btn-wide">
               Create Match
