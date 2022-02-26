@@ -502,14 +502,15 @@ onMounted(() => {
             </button>
           </div>
         </section>
-        <section v-show="activeTab == 4" id="finish" class="px-28 my-12">
-          <h1 class="pb-8">Finish</h1>
-          <div class="flex justify-center py-12">
-            <button @click="activeTab--" class="btn">Back</button>
-            <button @click="createNewMatch" class="btn btn-wide">
-              Create Match
-            </button>
-          </div>
+        <section
+          v-show="activeTab == 4"
+          id="finish"
+          class="px-28 my-12 text-center"
+        >
+          <button @click="activeTab--" class="btn btn-ghost mr-4">Back</button>
+          <button @click="createNewMatch" class="btn btn-primary btn-wide">
+            Create Match
+          </button>
         </section>
       </div>
     </div>
