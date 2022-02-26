@@ -106,6 +106,8 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "@/firebase";
 import { useRouter } from "vue-router";
 import { reactive, toRefs, computed, ref } from "vue";
 import Loading from "@/components/Loading.vue";
@@ -150,8 +152,15 @@ const handleSubmit = async () => {
         state.email,
         state.password
       );
+      const id = user.uid;
       await updateProfile(user, {
         displayName: state.displayName,
+      });
+      await setDoc(doc(db, "users", id), {
+        uid: id,
+        pro: false,
+        sid: "",
+        verified: false,
       });
       await router.replace({ name: "Dashboard" });
     } catch (e) {
