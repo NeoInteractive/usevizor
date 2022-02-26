@@ -33,10 +33,24 @@ onMounted(() => {
       <div class="hidden md:block" v-if="user">
         <div class="py-2 px-4 ml-4 font-heading inline">
           {{ userAuth.displayName }}
-          <i
+          <div
+            class="tooltip"
             v-show="userProfile.verified"
-            class="fa-solid fa-badge-check ml-1 text-yellow-400"
-          />
+            data-tip="Verified"
+          >
+            <span class="fa-stack">
+              <i class="fa-solid fa-square fa-stack text-yellow-300" />
+              <i class="fa fa-badge-check fa-stack-1x fa-inverse text-black" />
+            </span>
+          </div>
+          <div class="tooltip" v-show="userProfile.pro" data-tip="Pro Plan">
+            <span class="fa-stack">
+              <i class="fa-solid fa-square fa-stack text-cyan-400" />
+              <i
+                class="fa fa-rocket-launch fa-stack-1x fa-inverse text-black"
+              />
+            </span>
+          </div>
         </div>
         <router-link
           :to="{ name: 'Dashboard' }"
@@ -61,12 +75,6 @@ onMounted(() => {
         >
           Login
         </router-link>
-        <a
-          class="t-transition-effect py-2 px-4 ml-4 font-heading rounded cursor-pointer bg-error hover:bg-opacity-75"
-          @click="signOutUser"
-        >
-          Log Out
-        </a>
         <router-link
           :to="{ name: 'SignUp' }"
           class="nav-link t-transition-effect"
