@@ -1,39 +1,53 @@
 <script setup>
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { useRouter } from "vue-router";
 import { ref } from "vue";
-import Loading from "@/components/Loading.vue";
+import { db } from "@/firebase";
+import { useRouter } from "vue-router";
 import { isValidEmail } from "@/helpers";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 import { useStore } from "@/stores/user.store";
+import { useToast } from "vue-toastification";
+
+import Loading from "@/components/Loading.vue";
 
 const auth = getAuth();
 const router = useRouter();
 const userStore = useStore();
 const loading = ref(false);
-const error = ref("");
+const toast = useToast();
 
-const handleSubmit = async (e) => {
+let error = ref("");
+let email = ref("");
+let password = ref("");
+
+const handleSubmit = async () => {
   loading.value = true;
-  const { email, password } = e.target.elements;
-  if (
+  signInWithEmailAndPassword(auth, email.value, password.value)
+    .then((user) => {
+      userStore.setAuthData(user.user);
+      getUserProfileData(user.user.uid);
+    })
+    .catch((error) => {
+      toast.error(error.message);
+      email.value = "";
+      password.value = "";
+      loading.value = false;
+    });
+};
+
+const getUserProfileData = async (userID) => {
+  const docSnap = await getDoc(doc(db, "users", userID));
+  userStore.setProfileData(docSnap.data());
+  router.replace({ name: "Dashboard" });
+  loading.value = false;
+};
+
+const loginFieldsValid = () => {
+  return (
     email.value.length > 0 &&
     password.value.length > 0 &&
     isValidEmail(email.value)
-  ) {
-    signInWithEmailAndPassword(auth, email.value, password.value)
-      .then((user) => {
-        console.log(user.user);
-        userStore.setAuthData(user.user);
-        router.replace({ name: "Dashboard" });
-      })
-      .catch((error) => {
-        console.log(error);
-        error.value = error.message;
-      });
-  } else {
-    error.value = "Enter valid Email and Password";
-  }
-  loading.value = false;
+  );
 };
 </script>
 
@@ -52,6 +66,7 @@ const handleSubmit = async (e) => {
               Email
             </label>
             <input
+              v-model="email"
               type="text"
               id="email"
               placeholder="hello@usevizor.com"
@@ -64,6 +79,7 @@ const handleSubmit = async (e) => {
               Password
             </label>
             <input
+              v-model="password"
               type="password"
               id="password"
               placeholder="********"
@@ -73,7 +89,8 @@ const handleSubmit = async (e) => {
           <div class="flex justify-between items-center">
             <button
               type="submit"
-              class="t-btn inline-flex items-center bg-primary"
+              class="t-btn inline-flex items-center bg-primary disabled:opacity-50"
+              :disabled="!loginFieldsValid()"
             >
               <Loading class="h-5 w-5" v-if="loading" />
               <font-awesome-icon
@@ -95,7 +112,7 @@ const handleSubmit = async (e) => {
               >Forgot Password?
             </router-link>
           </h5>
-          <div v-if="error.length > 0" class="mt-4 p-4 bg-error rounded">
+          <div v-if="error !== ''" class="mt-8 p-4 bg-error rounded">
             {{ error }}
           </div>
         </form>

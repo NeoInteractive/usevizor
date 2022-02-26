@@ -14,7 +14,7 @@
       </p>
     </div> -->
 
-    <div class="text-center p-4 bg-gray-950">
+    <div class="text-center p-4 bg-gray-950 border-t border-indigo-500">
       VIZOR was made with 💜 and ☕ by
       <a
         href="https://neointeractive.dev"

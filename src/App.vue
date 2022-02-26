@@ -16,8 +16,8 @@ getUserState().then(() => {
 <template>
   <aside v-if="route.meta.has_nav" class="bg-indigo-900 text-center py-2">
     <p>
-      VIZOR is currently under active development. While I'll do my best not to
-      break things, just know it may happen at times.
+      VIZOR is currently under active development. While we'll do our best not
+      to break things, just know it may happen at times.
     </p>
   </aside>
   <div
