@@ -96,17 +96,34 @@ onMounted(() => {
       <div class="w-full flex flex-row">
         <div class="w-2/5">
           <h1 class="text-2xl text-heading text-indigo-100">
+            OBS Browser Source
+          </h1>
+          <div
+            class="bg-gray-950 p-6 border border-gray-500 mt-4 flex flex-col justify-between mb-12"
+          >
+            <div class="flex flex-col w-full justify-between text-center">
+              <div class="items-center">
+                <code
+                  @click="copy(`https://usevizor.com/m/${matchData.id}`)"
+                  class="text-xs font-bold text-gray-400 cursor-pointer"
+                >
+                  https://usevizor.com/m/{{ matchData.id }}
+                </code>
+              </div>
+            </div>
+          </div>
+          <h1 class="text-2xl text-heading text-indigo-100">
             Match Information
           </h1>
           <div
-            class="bg-gray-950 p-4 border border-gray-500 mt-4 flex flex-col justify-between"
+            class="bg-gray-950 p-6 border border-gray-500 mt-4 flex flex-col justify-between"
           >
             <div class="flex flex-row w-full justify-between mb-6">
-              <h3 class="font-bold tracking-wide text-gray-100">Heading:</h3>
+              <h3 class="tracking-wide text-indigo-300">Heading:</h3>
               <h3>{{ matchData.heading }}</h3>
             </div>
             <div class="flex flex-row w-full justify-between mb-6">
-              <h3 class="font-bold tracking-wide text-gray-100">Subheading:</h3>
+              <h3 class="tracking-wide text-indigo-300">Subheading:</h3>
               <h3>
                 {{ matchData.subheading }}
                 <span
@@ -121,34 +138,18 @@ onMounted(() => {
               </h3>
             </div>
             <div class="flex flex-row w-full justify-between mb-6">
-              <h3 class="font-bold tracking-wide text-gray-100">
-                Scoreboard Theme:
+              <h3 class="tracking-wide text-indigo-300">Scoreboard Theme:</h3>
+              <h3>
+                {{
+                  matchData.scoreboard.theme === "default" ? "Default" : "Pro"
+                }}
               </h3>
-              <h3>{{ matchData.scoreboard.theme || "-" }}</h3>
             </div>
-            <div class="flex flex-row w-full justify-between mb-6">
-              <h3 class="font-bold tracking-wide text-gray-100">Dark Mode:</h3>
+            <div class="flex flex-row w-full justify-between">
+              <h3 class="tracking-wide text-indigo-300">Dark Mode:</h3>
               <h3>
                 {{ matchData.scoreboard.dark === true ? "Active" : "Disabled" }}
               </h3>
-            </div>
-          </div>
-          <h1 class="text-2xl text-heading text-indigo-100 mt-12">
-            Scoreboard Links
-          </h1>
-          <div
-            class="bg-gray-950 p-4 border border-gray-500 mt-4 flex flex-col justify-between"
-          >
-            <div class="flex flex-col w-full justify-between">
-              <h3 class="font-bold tracking-wide">OBS Overlay URL:</h3>
-              <div class="items-center">
-                <code
-                  @click="copy(`https://usevizor.com/m/${matchData.id}`)"
-                  class="text-xs font-bold text-cyan-400 cursor-pointer"
-                >
-                  https://usevizor.com/m/{{ matchData.id }}
-                </code>
-              </div>
             </div>
           </div>
         </div>
@@ -167,11 +168,11 @@ onMounted(() => {
                 >
                   {{ matchData.team_one.score }}
                 </div>
-                <div v-if="matchData" class="p-2 text-gray-300">
+                <div v-if="matchData" class="p-6 text-gray-300">
                   <div class="flex flex-row w-full">
                     <div
                       @click="updateScore('team_one', 'sub')"
-                      class="flex justify-center items-center cursor-pointer w-1/3 p-1 group"
+                      class="flex justify-center items-center cursor-pointer w-1/3 p-1 pr-3 group"
                     >
                       <div
                         class="opacity-50 bg-gray-950 hover:bg-indigo-500 hover:font-bold transition-all duration-200 w-full h-full items-center justify-center flex border-2 border-indigo-500 px-5 py-2.5 hover:opacity-100 group-hover:text-white select-none focus:scale-95"
@@ -181,7 +182,7 @@ onMounted(() => {
                     </div>
                     <div
                       @click="updateScore('team_one', 'add')"
-                      class="flex justify-center items-center cursor-pointer w-full p-1 group"
+                      class="flex justify-center items-center cursor-pointer w-full p-1 pl-3 group"
                     >
                       <div
                         class="bg-gray-950 hover:bg-indigo-500 hover:font-bold transition-all duration-200 w-full h-full items-center justify-center flex border-2 border-indigo-500 px-5 py-2.5 group-hover:text-white select-none"
@@ -215,11 +216,11 @@ onMounted(() => {
                 >
                   {{ matchData.team_two.score }}
                 </div>
-                <div v-if="matchData" class="p-2 text-gray-300">
+                <div v-if="matchData" class="text-gray-300 p-6">
                   <div class="flex flex-row w-full">
                     <div
                       @click="updateScore('team_two', 'sub')"
-                      class="flex justify-center items-center cursor-pointer w-1/3 p-1 group"
+                      class="flex justify-center items-center cursor-pointer w-1/3 p-1 pr-3 group"
                     >
                       <div
                         class="opacity-50 bg-gray-950 hover:bg-indigo-500 hover:font-bold transition-all duration-200 w-full h-full items-center justify-center flex border-2 border-indigo-500 px-5 py-2.5 hover:opacity-100 group-hover:text-white select-none focus:scale-95"
@@ -229,7 +230,7 @@ onMounted(() => {
                     </div>
                     <div
                       @click="updateScore('team_two', 'add')"
-                      class="flex justify-center items-center cursor-pointer w-full p-1 group"
+                      class="flex justify-center items-center cursor-pointer w-full p-1 pl-3 group"
                     >
                       <div
                         class="bg-gray-950 hover:bg-indigo-500 hover:font-bold transition-all duration-200 w-full h-full items-center justify-center flex border-2 border-indigo-500 px-5 py-2.5 group-hover:text-white select-none"
@@ -254,7 +255,6 @@ onMounted(() => {
               </div>
             </div>
           </div>
-          {{ userProfile }}
           <!-- <h1 class="text-2xl text-heading text-indigo-100 mt-12">
             Edit Match Data
           </h1>
