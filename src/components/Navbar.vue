@@ -1,9 +1,13 @@
 <script setup>
+import { ref, onMounted } from "vue";
 import { useAuthState, useSignOut } from "@/firebase";
 import { useRouter } from "vue-router";
+import { useStore } from "@/stores/user.store";
 import Menu from "./Menu.vue";
 const { user } = useAuthState();
 const router = useRouter();
+let userAuth = ref(null);
+let userProfile = ref(null);
 const signOutUser = async () => {
   await useSignOut();
   await router.replace({ name: "Home" });
@@ -11,6 +15,11 @@ const signOutUser = async () => {
 const goToHome = () => {
   router.push({ name: "Home" });
 };
+onMounted(() => {
+  const { auth_data, profile_data } = useStore();
+  userAuth.value = auth_data;
+  userProfile.value = profile_data;
+});
 </script>
 <template>
   <nav class="t-transition-effect nav-style px-2 md:px-0">
@@ -21,8 +30,14 @@ const goToHome = () => {
         class="w-28"
         @click="goToHome"
       />
-
       <div class="hidden md:block" v-if="user">
+        <div class="py-2 px-4 ml-4 font-heading inline">
+          {{ userAuth.displayName }}
+          <i
+            v-show="userProfile.verified"
+            class="fa-solid fa-badge-check ml-1 text-yellow-400"
+          />
+        </div>
         <router-link
           :to="{ name: 'Dashboard' }"
           class="nav-link t-transition-effect"
@@ -46,6 +61,12 @@ const goToHome = () => {
         >
           Login
         </router-link>
+        <a
+          class="t-transition-effect py-2 px-4 ml-4 font-heading rounded cursor-pointer bg-error hover:bg-opacity-75"
+          @click="signOutUser"
+        >
+          Log Out
+        </a>
         <router-link
           :to="{ name: 'SignUp' }"
           class="nav-link t-transition-effect"

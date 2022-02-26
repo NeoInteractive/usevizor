@@ -9,8 +9,10 @@ import ScoreboardDefault from "@/components/scoreboards/ScoreboardDefault.vue";
 
 const toast = useToast();
 const route = useRoute();
+
 let matchData = ref(undefined);
-let user = ref(null);
+let userAuth = ref(null);
+let userProfile = ref(null);
 
 const getMatchData = async () => {
   if (!route.params.id) return;
@@ -55,8 +57,9 @@ const copy = (text) => {
   toast.success("OBS Overlay URL copied to clipboard!");
 };
 onMounted(() => {
-  const { auth_data } = useStore();
-  user.value = auth_data;
+  const { auth_data, profile_data } = useStore();
+  userAuth.value = auth_data;
+  userProfile.value = profile_data;
   getMatchData();
 });
 </script>
@@ -251,6 +254,7 @@ onMounted(() => {
               </div>
             </div>
           </div>
+          {{ userProfile }}
           <!-- <h1 class="text-2xl text-heading text-indigo-100 mt-12">
             Edit Match Data
           </h1>
