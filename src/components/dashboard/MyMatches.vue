@@ -85,7 +85,7 @@ onMounted(() => {
         </span>
         <div
           @click="router.replace(`/dashboard/m/${match.id}`)"
-          class="h-28 bg-gray-200 border border-gray-500 p-4 flex flex-col justify-between cursor-pointer hover:bg-gray-925 hover:border-indigo-400 transition active:bg-violet-700"
+          class="h-28 bg-gray-950 border border-gray-500 p-4 flex flex-col justify-between cursor-pointer text-gray-300 transition duration-400 ease-in-out hover:bg-gray-925 hover:border-indigo-400 hover:text-white transition active:bg-violet-700"
         >
           <div class="flex flex-row justify-between">
             <h1 class="text-sm">{{ match.heading }}</h1>

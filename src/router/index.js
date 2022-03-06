@@ -47,6 +47,14 @@ const routes = [
   {
     path: "/dashboard",
     name: "Dashboard",
+    redirect: () => {
+      return { path: "/dashboard/matches" };
+    },
+    meta: { requiresAuth: true, has_nav: false, has_foot: true },
+  },
+  {
+    path: "/dashboard/:page",
+    name: "DashboardSubpage",
     component: () => import("@/views/Dashboard.vue"),
     meta: { requiresAuth: true, has_nav: false, has_foot: true },
   },

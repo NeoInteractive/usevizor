@@ -33,9 +33,6 @@ body {
 }
 
 /* Pre configured class */
-.router-link-active {
-  @apply bg-primary;
-}
 
 .t-main-set {
   @apply lg:container lg:mx-auto md:px-20 2xl:px-40;
