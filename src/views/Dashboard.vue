@@ -16,91 +16,111 @@ const signOutUser = async () => {
 };
 </script>
 <template>
-  <div class="bg-gray-925">
-    <div class="mx-auto 2xl:w-3/4 xl:w-full max-w-screen-xl">
-      <p
-        class="text-heading tracking-wide font-bold text-3xl p-12 border-x border-gray-500 bg-gradient-to-r from-indigo-900 to-gray-950"
-      >
-        Dashboard
-      </p>
-      <div class="flex flex-row border-t border-gray-500">
-        <div class="w-64 bg-gray-950 border-x border-b border-gray-500">
-          <div class="flex flex-col flex-wrap px-4 py-4 select-none">
-            <div class="my-3">
-              <h3
-                class="text-sm uppercase text-indigo-300 font-bold mb-4 tracking-widest"
-              >
-                Matches
-              </h3>
-              <p
-                class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer"
-                @click="activeTab = 'all-matches'"
-              >
-                My Matches
-              </p>
-              <p
-                class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer"
-                @click="activeTab = 'create-match'"
-              >
-                Create Match
-              </p>
-            </div>
-            <div class="my-3">
-              <h3
-                class="text-sm uppercase text-indigo-300 font-bold mb-4 tracking-widest"
-              >
-                Account
-              </h3>
-              <p
-                class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer opacity-50"
-              >
-                Preferences
-              </p>
-              <p
-                class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer opacity-50"
-              >
-                Billing
-              </p>
-            </div>
-            <div class="my-3">
-              <h3
-                class="text-sm uppercase text-indigo-300 font-bold mb-4 tracking-widest"
-              >
-                App
-              </h3>
-              <p
-                class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer"
-                @click="activeTab = 'changelog'"
-              >
-                Changelog
-              </p>
-              <p
-                class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer"
-                @click="activeTab = 'about'"
-              >
-                About
-              </p>
-              <p
-                class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer"
-                @click="signOutUser"
-              >
-                Logout
-              </p>
-            </div>
+  <div class="bg-gray-925 h-screen">
+    <div class="flex flex-row border-r border-gray-500 h-screen">
+      <div class="w-64 h-full bg-gray-950 border-r border-gray-500">
+        <div class="flex flex-col flex-wrap px-4 py-4 select-none">
+          <figure class="p-4">
+            <img src="@/assets/logo-long.svg" alt="VIZOR" />
+          </figure>
+          <!-- <div class="mt-12 mb-3">
+            <p
+              class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer"
+              @click="activeTab = 'all-matches'"
+            >
+              Dashboard
+            </p>
+            <p
+              class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer opacity-50"
+            >
+              Analytics
+            </p>
+          </div> -->
+          <div class="mt-12 my-3">
+            <h3
+              class="text-sm uppercase text-indigo-300 font-bold mb-4 tracking-widest"
+            >
+              Matches
+            </h3>
+            <p
+              class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer"
+              :class="{ 'text-indigo-400': activeTab == 'my-matches' }"
+              @click="activeTab = 'all-matches'"
+            >
+              My Matches
+            </p>
+            <p
+              class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer"
+              @click="activeTab = 'create-match'"
+            >
+              Create Match
+            </p>
+          </div>
+          <div class="my-3">
+            <h3
+              class="text-sm uppercase text-indigo-300 font-bold mb-4 tracking-widest"
+            >
+              Account
+            </h3>
+            <p
+              class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer opacity-50"
+            >
+              Preferences
+            </p>
+            <p
+              class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer opacity-50"
+            >
+              Billing
+            </p>
+          </div>
+          <div class="my-3">
+            <h3
+              class="text-sm uppercase text-indigo-300 font-bold mb-4 tracking-widest"
+            >
+              App
+            </h3>
+            <p
+              class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer"
+              @click="activeTab = 'changelog'"
+            >
+              Changelog
+            </p>
+            <p
+              class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer"
+              @click="activeTab = 'about'"
+            >
+              About
+            </p>
+            <p
+              class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer"
+              @click="signOutUser"
+            >
+              Logout
+            </p>
           </div>
         </div>
-        <div v-if="user" class="w-full">
-          <my-matches
-            v-if="activeTab == 'all-matches'"
-            @create-match="activeTab = 'create-match'"
-          />
-          <create-match
-            v-if="activeTab == 'create-match'"
-            @match-created="activeTab = 'all-matches'"
-          />
-          <changelog v-if="activeTab == 'changelog'" />
-          <about v-if="activeTab == 'about'" />
+      </div>
+      <div v-if="user" class="w-full">
+        <div
+          class="flex flex-row justify-between items-center bg-gray-950 px-4 py-6 border-b border-gray-500"
+        >
+          <h1 class="text-gray-300 tracking-wider font-light text-sm">
+            VIZOR Alpha
+          </h1>
+          <button @click="signOutUser" class="btn btn-sm btn-primary">
+            <i class="fa-solid fa-sign-out mr-2"></i> Log Out
+          </button>
         </div>
+        <my-matches
+          v-if="activeTab == 'all-matches'"
+          @create-match="activeTab = 'create-match'"
+        />
+        <create-match
+          v-if="activeTab == 'create-match'"
+          @match-created="activeTab = 'all-matches'"
+        />
+        <changelog v-if="activeTab == 'changelog'" />
+        <about v-if="activeTab == 'about'" />
       </div>
     </div>
   </div>

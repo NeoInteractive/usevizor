@@ -47,9 +47,9 @@ onMounted(() => {
 <template>
   <div>
     <div
-      class="flex flex-row justify-between items-center bg-gray-950 p-4 border-b border-r border-gray-500 bg-gradient-to-r from-gray-900 via-gray-925 to-gray-950"
+      class="flex flex-row justify-between items-center bg-gray-950 px-4 py-12 border-b border-gray-500 bg-gradient-to-r from-gray-900 via-gray-925 to-gray-950"
     >
-      <h1 class="text-white tracking-wide font-normal text-xl">My Matches</h1>
+      <h1 class="text-white tracking-wide font-normal text-2xl">My Matches</h1>
       <div>
         <code class="">{{ matches.length }} / 5 </code>
         <span class="tooltip tooltip-top mr-6" data-tip="Free matches created">
@@ -69,7 +69,7 @@ onMounted(() => {
     </div>
     <div
       v-if="matches.length > 0"
-      class="flex flex-row flex-wrap px-4 border-r border-b border-gray-500 p-8 min-h-[30rem] bg-gray-950"
+      class="flex flex-row flex-wrap px-4 border-r p-8"
     >
       <article
         v-for="match in matches"
@@ -100,10 +100,7 @@ onMounted(() => {
         </div>
       </article>
     </div>
-    <div
-      v-if="noMatches"
-      class="px-4 border-r border-b border-gray-500 p-8 min-h-[30rem] bg-gray-950 text-center py-24"
-    >
+    <div v-if="noMatches" class="px-4 p-8 text-center py-24">
       <h3 class="text-white">You haven't created any matches yet.</h3>
       <button @click="emit('createMatch')" class="btn btn-sm mt-6">
         Create Match
