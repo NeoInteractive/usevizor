@@ -7,11 +7,8 @@
     >
       <h1 class="text-white tracking-wide font-normal text-2xl">About</h1>
     </div>
-    <div
-      class="flex flex-col flex-wrap p-8 bg-gray-950 border-b border-r border-gray-500 min-h-[30rem]"
-    >
+    <div class="flex flex-col flex-wrap p-8">
       <p class="py-12">...</p>
-      <p>VIZOR was made with 💜 and ☕ by Neo Interactive</p>
     </div>
   </div>
 </template>

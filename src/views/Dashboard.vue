@@ -91,58 +91,53 @@ const signOutUser = async () => {
             </h3>
             <router-link
               to="/dashboard/matches"
-              class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer"
-              :class="{ 'text-indigo-400': page == 'matches' }"
+              class="mb-6 hover:cursor-pointer p-2"
+              :class="{
+                'bg-gray-800': page == 'matches',
+              }"
             >
               My Matches
             </router-link>
             <router-link
               to="/dashboard/create"
-              class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer"
-              :class="{ 'text-indigo-400': page == 'create' }"
+              class="mb-6 hover:cursor-pointer p-2"
+              :class="{ 'bg-gray-800': page == 'create' }"
             >
               Create Match
             </router-link>
           </div>
-          <div class="my-3">
+          <div class="my-3 flex flex-col">
             <h3
               class="text-sm uppercase text-indigo-300 font-bold mb-4 tracking-widest"
             >
               Account
             </h3>
-            <p
-              class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer opacity-50"
-            >
-              Preferences
-            </p>
-            <p
-              class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer opacity-50"
-            >
-              Billing
-            </p>
+            <p class="mb-6 hover:cursor-pointer p-2 opacity-50">Preferences</p>
+            <p class="mb-6 hover:cursor-pointer p-2 opacity-50">Billing</p>
           </div>
-          <div class="my-3">
+          <div class="my-3 flex flex-col">
             <h3
               class="text-sm uppercase text-indigo-300 font-bold mb-4 tracking-widest"
             >
               App
             </h3>
-            <p
-              class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer"
-              @click="activeTab = 'changelog'"
+            <router-link
+              to="/dashboard/changelog"
+              class="mb-6 hover:cursor-pointer p-2"
+              :class="{
+                'bg-gray-800': page == 'changelog',
+              }"
             >
               Changelog
-            </p>
-            <p
-              class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer"
-              @click="activeTab = 'about'"
+            </router-link>
+            <router-link
+              to="/dashboard/about"
+              class="mb-6 hover:cursor-pointer p-2"
+              :class="{ 'bg-gray-800': page == 'about' }"
             >
               About
-            </p>
-            <p
-              class="mb-6 hover:text-indigo-400 hover:font-bold transition hover:cursor-pointer"
-              @click="signOutUser"
-            >
+            </router-link>
+            <p class="mb-6 hover:cursor-pointer p-2" @click="signOutUser">
               Logout
             </p>
           </div>
@@ -168,7 +163,7 @@ const signOutUser = async () => {
           @create-match="router.push('/dashboard/matches')"
         />
         <changelog v-if="page == 'changelog'" />
-        <about v-if="activeTab == 'about'" />
+        <about v-if="page == 'about'" />
       </div>
     </div>
   </div>
