@@ -47,11 +47,11 @@ onMounted(() => {
 <template>
   <div>
     <div
-      class="flex flex-row justify-between items-center bg-gray-950 px-4 py-12 border-b border-gray-500 bg-gradient-to-r from-gray-900 via-gray-925 to-gray-950"
+      class="flex flex-row justify-between items-center px-4 py-12 border-b border-gray-500 bg-gradient-to-r from-gray-900 via-gray-925 to-gray-950"
     >
       <h1 class="text-white tracking-wide font-normal text-2xl">My Matches</h1>
       <div>
-        <code class="">{{ matches.length }} / 5 </code>
+        <code class="">{{ matches.length }} / 1 </code>
         <span class="tooltip tooltip-top mr-6" data-tip="Free matches created">
           <i class="fa-duotone fa-circle-question"></i>
         </span>
@@ -85,7 +85,7 @@ onMounted(() => {
         </span>
         <div
           @click="router.replace(`/dashboard/m/${match.id}`)"
-          class="h-28 bg-gray-950 border border-gray-500 p-4 flex flex-col justify-between cursor-pointer hover:bg-gray-925 hover:border-indigo-400 transition active:bg-violet-700"
+          class="h-28 bg-gray-200 border border-gray-500 p-4 flex flex-col justify-between cursor-pointer hover:bg-gray-925 hover:border-indigo-400 transition active:bg-violet-700"
         >
           <div class="flex flex-row justify-between">
             <h1 class="text-sm">{{ match.heading }}</h1>

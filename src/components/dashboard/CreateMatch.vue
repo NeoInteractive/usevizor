@@ -59,7 +59,7 @@ let newMatch = reactive({
 });
 
 const createNewMatch = async () => {
-  if (matches.value.length >= 5) {
+  if (matches.value.length >= 1) {
     window.scrollTo(0, 0);
     toast.error(
       "Your account has reached its free match limit. Delete a match to create a new one."

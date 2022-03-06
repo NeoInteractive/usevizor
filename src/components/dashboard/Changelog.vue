@@ -12,7 +12,18 @@
     >
       <article class="w-full mb-12">
         <h3
-          class="text-bold text-indigo-100 border-b border-indigo-400 w-full pb-2 mb-4"
+          class="text-bold text-indigo-100 border-b border-gray-500 w-full pb-2 mb-4"
+        >
+          Version 1.1.2 Alpha
+        </h3>
+        <ul class="list-disc pl-8 text-gray-300">
+          <li>Change free tier limit to 1 match</li>
+        </ul>
+      </article>
+
+      <article class="w-full mb-12">
+        <h3
+          class="text-bold text-indigo-100 border-b border-gray-500 w-full pb-2 mb-4"
         >
           Version 1.1.1 Alpha
         </h3>
@@ -22,7 +33,7 @@
       </article>
       <article class="w-full mb-12">
         <h3
-          class="text-bold text-indigo-100 border-b border-indigo-400 w-full pb-2 mb-4"
+          class="text-bold text-indigo-100 border-b border-gray-500 w-full pb-2 mb-4"
         >
           Version 1.1.0 Alpha
         </h3>
@@ -34,7 +45,7 @@
       </article>
       <article class="w-full">
         <h3
-          class="text-bold text-indigo-100 border-b border-indigo-400 w-full pb-2 mb-4"
+          class="text-bold text-indigo-100 border-b border-gray-500 w-full pb-2 mb-4"
         >
           Version 1.0.0 Alpha
         </h3>
