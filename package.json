@@ -30,6 +30,7 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.10.2",
     "autoprefixer": "^10.4.2",
+    "hyperdocs-cli": "^0.0.5",
     "postcss": "^8.4.5",
     "tailwindcss": "^3.0.13",
     "vite": "^2.7.1"
