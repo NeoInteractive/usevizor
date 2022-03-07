@@ -48,7 +48,7 @@ const routes = [
     path: "/dashboard",
     name: "Dashboard",
     redirect: () => {
-      return { path: "/dashboard/matches" };
+      return { path: "/dashboard/all" };
     },
     meta: { requiresAuth: true, has_nav: false, has_foot: true },
   },
@@ -61,8 +61,8 @@ const routes = [
   {
     path: "/dashboard/m/:id",
     name: "MatchAdmin",
-    component: () => import("@/views/Match.vue"),
-    meta: { requiresAuth: true, has_nav: true, has_foot: true },
+    component: () => import("@/views/Dashboard.vue"),
+    meta: { requiresAuth: true, has_nav: false, has_foot: true },
   },
   {
     path: "/:pathMatch(.*)*",

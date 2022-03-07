@@ -65,35 +65,18 @@ onMounted(() => {
 </script>
 <template>
   <div v-if="matchData" class="bg-gray-925">
-    <div class="container-2xl mx-auto max-w-screen-xl">
+    <div class="">
       <p
-        class="text-heading text-3xl px-4 py-12 border border-gray-500 bg-gradient-to-r from-indigo-900 to-gray-950"
+        class="text-heading text-3xl px-4 py-12 border-b border-gray-500 bg-gradient-to-r from-indigo-900 to-gray-950"
       >
         {{
           matchData.heading == "" ? `Match: ${matchData.id}` : matchData.heading
         }}
       </p>
-      <div
-        class="flex flex-row justify-between items-center bg-gray-950 p-4 border-x border-gray-500"
-      >
-        <router-link
-          to="/dashboard/"
-          class="text-heading text-sm opacity-80 tracking-wider hover:text-indigo-400 hover:opacity-100 hover:font-bold"
-        >
-          <i class="fa-solid fa-arrow-left mr-2" />Dashboard
-        </router-link>
-        <div class="text-heading text-white text-sm flex flex-row items-center">
-          <p class="text-xs mr-4">Scoreboard preview background color:</p>
-          <select class="select select-bordered select-xs select-ghost">
-            <option disabled>----</option>
-            <option selected value="default">Dark</option>
-          </select>
-        </div>
-      </div>
-      <div class="pt-6 pb-6 mb-12 bg-gray-950 border border-gray-500">
+      <div class="pt-6 pb-6 mb-3 bg-gray-950 border-b border-gray-500">
         <scoreboard-default />
       </div>
-      <div class="w-full flex flex-row">
+      <div class="w-full flex flex-row p-6">
         <div class="w-2/5">
           <h1 class="text-2xl text-heading text-indigo-100">
             OBS Browser Source

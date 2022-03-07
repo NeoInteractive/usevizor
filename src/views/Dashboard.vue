@@ -1,6 +1,7 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted } from "vue";
 import { useAuthState } from "@/firebase";
+import Matches from "@/views/Match.vue";
 import MyMatches from "@/components/dashboard/MyMatches.vue";
 import CreateMatch from "@/components/dashboard/CreateMatch.vue";
 import About from "@/components/dashboard/About.vue";
@@ -8,14 +9,17 @@ import Changelog from "@/components/dashboard/Changelog.vue";
 import { useSignOut } from "@/firebase";
 import { useRoute, useRouter } from "vue-router";
 const { user } = useAuthState();
-let activeTab = ref("all-matches");
 const router = useRouter();
 const route = useRoute();
 const page = route.params.page;
+const match = route.params.id;
 const signOutUser = async () => {
   await useSignOut();
   await router.replace({ name: "Home" });
 };
+onMounted(() => {
+  console.log(page);
+});
 </script>
 <template>
   <div class="bg-gray-925 h-screen">
@@ -90,7 +94,7 @@ const signOutUser = async () => {
               Matches
             </h3>
             <router-link
-              to="/dashboard/matches"
+              to="/dashboard/all"
               class="mb-6 hover:cursor-pointer p-2"
               :class="{
                 'bg-gray-800': page == 'matches',
@@ -154,13 +158,14 @@ const signOutUser = async () => {
             <i class="fa-solid fa-sign-out mr-2"></i> Log Out
           </button>
         </div>
+        <matches v-if="match" />
         <my-matches
-          v-if="page == 'matches'"
+          v-if="page == 'all'"
           @create-match="router.push('/dashboard/create')"
         />
         <create-match
           v-if="page == 'create'"
-          @create-match="router.push('/dashboard/matches')"
+          @create-match="router.push('/dashboard/all')"
         />
         <changelog v-if="page == 'changelog'" />
         <about v-if="page == 'about'" />

@@ -49,7 +49,7 @@ onMounted(() => {
     <div
       class="flex flex-row justify-between items-center px-4 py-12 border-b border-gray-500 bg-gradient-to-r from-gray-900 via-gray-925 to-gray-950"
     >
-      <h1 class="text-white tracking-wide font-normal text-2xl">My Matches</h1>
+      <h1 class="text-white tracking-wide font-normal text-2xl">All Matches</h1>
       <div>
         <code class="">{{ matches.length }} / 1 </code>
         <span class="tooltip tooltip-top mr-6" data-tip="Free matches created">
@@ -83,7 +83,8 @@ onMounted(() => {
         >
           Delete
         </span>
-        <div
+        <router-link
+          :to="{ name: 'MatchAdmin', params: { id: match.id } }"
           @click="router.replace(`/dashboard/m/${match.id}`)"
           class="h-28 bg-gray-950 border border-gray-500 p-4 flex flex-col justify-between cursor-pointer text-gray-300 transition duration-400 ease-in-out hover:bg-gray-925 hover:border-indigo-400 hover:text-white transition active:bg-violet-700"
         >
@@ -97,7 +98,7 @@ onMounted(() => {
           <h1 class="text-xs font-light text-indigo-100 opacity-70">
             {{ match.status }} | {{ match.id.toUpperCase() }}
           </h1>
-        </div>
+        </router-link>
       </article>
     </div>
     <div v-if="noMatches" class="px-4 p-8 text-center py-24">
