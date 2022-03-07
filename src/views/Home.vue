@@ -17,8 +17,8 @@
         </p>
         <p class="text-xl font-light mb-6">
           We’re currently in Open Beta. If you’re interested in joining the
-          beta, register for access using the button below and we'll send you an
-          email to confirm your account.
+          beta, register for access using the button below and create your first
+          overlay today!
         </p>
         <router-link tag="button" to="/auth/signup" class="btn">
           Create an Account
