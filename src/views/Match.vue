@@ -73,10 +73,15 @@ onMounted(() => {
           matchData.heading == "" ? `Match: ${matchData.id}` : matchData.heading
         }}
       </p>
-      <div class="pt-6 pb-6 mb-3 bg-gray-950 border-b border-gray-500">
+      <div
+        class="pt-6 pb-6 mb-3 max-w-[80rem] bg-gray-950 border-r border-b border-gray-500"
+      >
+        <h1 class="text-2xl text-heading text-indigo-100 text-center mb-4">
+          Scoreboard Preview
+        </h1>
         <scoreboard-default />
       </div>
-      <div class="w-full flex flex-row p-6">
+      <div class="w-full flex flex-row p-6 max-w-[80rem]">
         <div class="w-2/5">
           <h1 class="text-2xl text-heading text-indigo-100">
             OBS Browser Source

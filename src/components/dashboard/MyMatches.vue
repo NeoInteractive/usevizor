@@ -69,7 +69,7 @@ onMounted(() => {
     </div>
     <div
       v-if="matches.length > 0"
-      class="flex flex-row flex-wrap px-4 border-r p-8"
+      class="flex flex-row flex-wrap px-4 p-8 max-w-[80rem]"
     >
       <article
         v-for="match in matches"

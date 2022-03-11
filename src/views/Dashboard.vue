@@ -97,17 +97,17 @@ onMounted(() => {
               to="/dashboard/all"
               class="mb-6 hover:cursor-pointer p-2"
               :class="{
-                'bg-gray-800': page == 'matches',
+                'bg-gray-800 rounded': page == 'all',
               }"
             >
-              My Matches
+              <i class="fa-solid fa-trophy-star mr-1 w-4" /> My Matches
             </router-link>
             <router-link
               to="/dashboard/create"
               class="mb-6 hover:cursor-pointer p-2"
-              :class="{ 'bg-gray-800': page == 'create' }"
+              :class="{ 'bg-gray-800 rounded': page == 'create' }"
             >
-              Create Match
+              <i class="fa-solid fa-plus mr-1 w-4" /> Create Match
             </router-link>
           </div>
           <div class="my-3 flex flex-col">
@@ -116,8 +116,12 @@ onMounted(() => {
             >
               Account
             </h3>
-            <p class="mb-6 hover:cursor-pointer p-2 opacity-50">Preferences</p>
-            <p class="mb-6 hover:cursor-pointer p-2 opacity-50">Billing</p>
+            <p class="mb-6 hover:cursor-pointer p-2 opacity-50">
+              <i class="fa-solid fa-gear mr-1 w-4" /> Preferences
+            </p>
+            <p class="mb-6 hover:cursor-pointer p-2 opacity-50">
+              <i class="fa-solid fa-file-invoice mr-1 w-4" /> Billing
+            </p>
           </div>
           <div class="my-3 flex flex-col">
             <h3
@@ -129,7 +133,7 @@ onMounted(() => {
               to="/dashboard/changelog"
               class="mb-6 hover:cursor-pointer p-2"
               :class="{
-                'bg-gray-800': page == 'changelog',
+                'bg-gray-800 rounded': page == 'changelog',
               }"
             >
               Changelog
@@ -137,7 +141,7 @@ onMounted(() => {
             <router-link
               to="/dashboard/about"
               class="mb-6 hover:cursor-pointer p-2"
-              :class="{ 'bg-gray-800': page == 'about' }"
+              :class="{ 'bg-gray-800 rounded': page == 'about' }"
             >
               About
             </router-link>

@@ -30,50 +30,12 @@ onMounted(() => {
         class="w-28"
         @click="goToHome"
       />
-      <div class="hidden md:block" v-if="user">
-        <div class="py-2 px-4 ml-4 font-heading inline">
-          {{ userAuth.displayName }}
-          <div
-            v-if="userProfile"
-            class="tooltip"
-            v-show="userProfile.verified"
-            data-tip="Verified"
-          >
-            <span class="fa-stack">
-              <i class="fa-solid fa-square fa-stack text-yellow-300" />
-              <i class="fa fa-badge-check fa-stack-1x fa-inverse text-black" />
-            </span>
-          </div>
-          <div
-            v-if="userProfile"
-            class="tooltip"
-            v-show="userProfile.pro"
-            data-tip="Pro Plan"
-          >
-            <span class="fa-stack">
-              <i class="fa-solid fa-square fa-stack text-cyan-400" />
-              <i
-                class="fa fa-rocket-launch fa-stack-1x fa-inverse text-black"
-              />
-            </span>
-          </div>
-        </div>
+      <div class="hidden md:block">
         <router-link
-          :to="{ name: 'Dashboard' }"
+          :to="{ name: 'Home' }"
           class="nav-link t-transition-effect"
         >
-          Dashboard
-        </router-link>
-        <a
-          class="t-transition-effect py-2 px-4 ml-4 font-heading rounded cursor-pointer bg-error hover:bg-opacity-75"
-          @click="signOutUser"
-        >
-          Log Out
-        </a>
-      </div>
-      <div class="hidden md:block" v-else>
-        <router-link :to="{ name: 'Home' }" class="nav-link t-transition-effect"
-          >Home
+          Home
         </router-link>
         <router-link
           :to="{ name: 'Login' }"
@@ -85,7 +47,7 @@ onMounted(() => {
           :to="{ name: 'SignUp' }"
           class="nav-link t-transition-effect"
         >
-          Create an Account
+          Create Account
         </router-link>
       </div>
       <div class="block md:hidden">

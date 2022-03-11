@@ -7,7 +7,7 @@
     >
       <h1 class="text-white tracking-wide font-normal text-2xl">Changelog</h1>
     </div>
-    <div class="flex flex-col flex-wrap p-8">
+    <div class="flex flex-col flex-wrap p-8 max-w-[80rem]">
       <article class="w-full mb-12">
         <h3
           class="text-bold text-indigo-100 border-b border-gray-500 w-full pb-2 mb-4"
