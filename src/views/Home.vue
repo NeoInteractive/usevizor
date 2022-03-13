@@ -99,7 +99,7 @@ let newMatch2 = reactive({
       </div>
     </div>
   </section>
-  <section class="bg-gray-925 py-48 flex justify-center">
+  <section class="bg-gray-925 py-56 flex justify-center">
     <div class="flex justify-between w-3/4 max-w-[100rem]">
       <div class="w-full pr-8">
         <h1 class="text-white text-2xl text-center pr-3">
