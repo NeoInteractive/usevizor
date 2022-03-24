@@ -8,9 +8,7 @@
           <h1 class="mb-6">Forgot Password</h1>
           <hr />
           <div class="mb-4">
-            <label class="block text-sm font-bold mb-2" for="email">
-              Email
-            </label>
+            <label class="block text-sm font-bold mb-2" for="email"> Email </label>
             <input
               type="text"
               id="email"
@@ -19,10 +17,7 @@
             />
           </div>
           <div class="flex justify-between items-center">
-            <button
-              type="submit"
-              class="t-btn inline-flex items-center bg-primary"
-            >
+            <button type="submit" class="btn inline-flex items-center btn-primary">
               <Loading class="h-5 w-5" v-show="loading" />
               Submit
             </button>
@@ -70,7 +65,7 @@ export default {
       if (email.value.length > 0) {
         try {
           await sendPasswordResetEmail(auth, email.value);
-          message.value = "Email sent on your registered email id";
+          message.value = "Email sent to your registered email id";
         } catch (e) {
           message.value = e.message;
         }

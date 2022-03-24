@@ -59,6 +59,7 @@ let newMatch = reactive({
 });
 
 const createNewMatch = async () => {
+  // TODO: Check the user profile to see if they have free matches available
   if (matches.value.length >= 1) {
     window.scrollTo(0, 0);
     toast.error(
@@ -101,25 +102,16 @@ onMounted(() => {
     <div
       class="flex flex-row justify-between items-center bg-gray-950 px-4 py-12 border-b border-r border-gray-500 bg-gradient-to-r from-gray-900 via-gray-925 to-gray-950"
     >
-      <h1 class="text-white tracking-wide font-normal text-2xl">
-        Create Match
-      </h1>
+      <h1 class="text-white tracking-wide font-normal text-2xl">Create Match</h1>
     </div>
     <div class="flex flex-col justify-between pt-3">
       <scoreboard-default :localMatchData="newMatch" />
       <ul class="steps steps-vertical lg:steps-horizontal py-12">
-        <li
-          class="step step-primary"
-          :class="{ 'step-primary': activeTab >= 1 }"
-        >
+        <li class="step step-primary" :class="{ 'step-primary': activeTab >= 1 }">
           Match Options
         </li>
-        <li class="step" :class="{ 'step-primary': activeTab >= 2 }">
-          Team One
-        </li>
-        <li class="step" :class="{ 'step-primary': activeTab >= 3 }">
-          Team Two
-        </li>
+        <li class="step" :class="{ 'step-primary': activeTab >= 2 }">Team One</li>
+        <li class="step" :class="{ 'step-primary': activeTab >= 3 }">Team Two</li>
         <li class="step" :class="{ 'step-primary': activeTab >= 4 }">Finish</li>
       </ul>
       <section v-show="activeTab == 1" id="matchOptions" class="px-28 py-6">
@@ -128,8 +120,8 @@ onMounted(() => {
           <div class="w-1/2">
             <h3 class="text-indigo-100 mb-2">Heading</h3>
             <p class="text-xs w-72 opacity-90">
-              Give a name for your match. Try to keep this less than 40
-              characters, with an absolute max of 56.
+              Give a name for your match. Try to keep this less than 40 characters, with
+              an absolute max of 56.
             </p>
           </div>
           <div class="w-1/2 flex flex-col justify-center">
@@ -154,8 +146,7 @@ onMounted(() => {
           <div class="w-1/2">
             <h3 class="text-indigo-100 mb-2">Subheading</h3>
             <p class="text-xs w-72 opacity-90">
-              A free-text line that spans the width of the scoreboard on the
-              bottom.
+              A free-text line that spans the width of the scoreboard on the bottom.
             </p>
           </div>
           <div class="w-1/2 flex flex-col justify-center">
@@ -179,9 +170,7 @@ onMounted(() => {
         <div class="flex flex-row p-8">
           <div class="w-1/2">
             <h3 class="text-indigo-100 mb-2">Base Theme</h3>
-            <p class="text-xs w-72 opacity-90">
-              Choose a base theme for the scoreboard.
-            </p>
+            <p class="text-xs w-72 opacity-90">Choose a base theme for the scoreboard.</p>
           </div>
           <div class="w-1/2 flex justify-center">
             <select
@@ -197,8 +186,8 @@ onMounted(() => {
           <div class="w-1/2">
             <h3 class="text-indigo-100 mb-2">Variant</h3>
             <p class="text-xs w-72 opacity-90">
-              Choose between a dark or light variant. Some Pro scoreboards may
-              have additional variants.
+              Choose between a dark or light variant. Some Pro scoreboards may have
+              additional variants.
             </p>
           </div>
           <div class="w-1/2 flex">
@@ -226,11 +215,7 @@ onMounted(() => {
           </div>
         </div>
         <div class="flex justify-center py-12">
-          <button
-            disabled
-            @click="activeTab--"
-            class="btn btn-sm btn-ghost mr-4"
-          >
+          <button disabled @click="activeTab--" class="btn btn-sm btn-ghost mr-4">
             Back
           </button>
           <button @click="activeTab++" class="btn btn-sm btn-primary btn-wide">
@@ -243,9 +228,7 @@ onMounted(() => {
         <div class="flex flex-row px-8 py-2">
           <div class="w-1/2">
             <h3 class="text-indigo-100 mb-2">Name</h3>
-            <p class="text-xs w-72 opacity-90">
-              This is pretty self explanatory.
-            </p>
+            <p class="text-xs w-72 opacity-90">This is pretty self explanatory.</p>
           </div>
           <div class="w-1/2 flex justify-center">
             <input
@@ -326,9 +309,7 @@ onMounted(() => {
         <div class="flex flex-row p-8">
           <div class="w-1/2">
             <h3 class="text-indigo-100 mb-2">Text Color</h3>
-            <p class="text-xs w-72 opacity-90">
-              Choose a text color for Team One.
-            </p>
+            <p class="text-xs w-72 opacity-90">Choose a text color for Team One.</p>
           </div>
           <div class="w-1/2 flex justify-center">
             <div class="mr-4">
@@ -350,9 +331,7 @@ onMounted(() => {
           </div>
         </div>
         <div class="flex justify-center py-12">
-          <button @click="activeTab--" class="btn btn-sm btn-ghost mr-4">
-            Back
-          </button>
+          <button @click="activeTab--" class="btn btn-sm btn-ghost mr-4">Back</button>
           <button @click="activeTab++" class="btn btn-sm btn-primary btn-wide">
             Next Step
           </button>
@@ -363,9 +342,7 @@ onMounted(() => {
         <div class="flex flex-row px-8 py-2">
           <div class="w-1/2">
             <h3 class="text-indigo-100 mb-2">Name</h3>
-            <p class="text-xs w-72 opacity-90">
-              This is pretty self explanatory.
-            </p>
+            <p class="text-xs w-72 opacity-90">This is pretty self explanatory.</p>
           </div>
           <div class="w-1/2 flex justify-center">
             <input
@@ -446,9 +423,7 @@ onMounted(() => {
         <div class="flex flex-row p-8">
           <div class="w-1/2">
             <h3 class="text-indigo-100 mb-2">Text Color</h3>
-            <p class="text-xs w-72 opacity-90">
-              Choose a text color for Team two.
-            </p>
+            <p class="text-xs w-72 opacity-90">Choose a text color for Team two.</p>
           </div>
           <div class="w-1/2 flex justify-center">
             <div class="mr-4">
@@ -470,19 +445,13 @@ onMounted(() => {
           </div>
         </div>
         <div class="flex justify-center py-12">
-          <button @click="activeTab--" class="btn btn-sm btn-ghost mr-4">
-            Back
-          </button>
+          <button @click="activeTab--" class="btn btn-sm btn-ghost mr-4">Back</button>
           <button @click="activeTab++" class="btn btn-sm btn-primary btn-wide">
             Next Step
           </button>
         </div>
       </section>
-      <section
-        v-show="activeTab == 4"
-        id="finish"
-        class="px-28 my-12 text-center"
-      >
+      <section v-show="activeTab == 4" id="finish" class="px-28 my-12 text-center">
         <button @click="activeTab--" class="btn btn-ghost mr-4">Back</button>
         <button @click="createNewMatch" class="btn btn-primary btn-wide">
           Create Match

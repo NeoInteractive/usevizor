@@ -22,32 +22,21 @@ onMounted(() => {
 });
 </script>
 <template>
-  <nav class="t-transition-effect nav-style px-2 md:px-0">
+  <nav class="t-transition-effect nav-style px-2 md:px-0 bg-black">
     <div class="t-main-set flex justify-between items-center">
-      <img
-        src="@/assets/logo-long.svg"
-        alt="Vizor Logo"
-        class="w-28"
-        @click="goToHome"
-      />
+      <img src="@/assets/logo-long.svg" alt="Vizor Logo" class="w-28" @click="goToHome" />
       <div class="hidden md:block">
-        <router-link
-          :to="{ name: 'Home' }"
-          class="nav-link t-transition-effect"
-        >
+        <router-link :to="{ name: 'Home' }" class="nav-link t-transition-effect">
           Home
         </router-link>
-        <router-link
-          :to="{ name: 'Login' }"
-          class="nav-link t-transition-effect"
-        >
-          Login
+        <router-link :to="{ name: 'Pricing' }" class="nav-link t-transition-effect">
+          Pricing
         </router-link>
-        <router-link
-          :to="{ name: 'SignUp' }"
-          class="nav-link t-transition-effect"
-        >
-          Create Account
+        <router-link :to="{ name: 'Home' }" class="nav-link t-transition-effect">
+          Features
+        </router-link>
+        <router-link :to="{ name: 'Login' }" class="nav-link t-transition-effect">
+          Login
         </router-link>
       </div>
       <div class="block md:hidden">
@@ -60,7 +49,7 @@ onMounted(() => {
 <style lang="postcss" scoped>
 .nav-style {
   @apply py-4 px-2
-  shadow-md bg-gray-950
+  shadow-md bg-black
   backdrop-filter backdrop-blur-sm border-b border-indigo-500;
 }
 .nav-link {

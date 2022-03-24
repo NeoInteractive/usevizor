@@ -16,12 +16,13 @@ const userStore = useStore();
 const loading = ref(false);
 const toast = useToast();
 
-let error = ref("");
+let error = ref(undefined);
 let email = ref("");
 let password = ref("");
 
 const handleSubmit = async () => {
   loading.value = true;
+  error.value = undefined;
   signInWithEmailAndPassword(auth, email.value, password.value)
     .then((user) => {
       userStore.setAuthData(user.user);
@@ -29,6 +30,7 @@ const handleSubmit = async () => {
     })
     .catch((error) => {
       toast.error(error.message);
+      error.value = error.message;
       email.value = "";
       password.value = "";
       loading.value = false;
@@ -43,11 +45,7 @@ const getUserProfileData = async (userID) => {
 };
 
 const loginFieldsValid = () => {
-  return (
-    email.value.length > 0 &&
-    password.value.length > 0 &&
-    isValidEmail(email.value)
-  );
+  return email.value.length > 0 && password.value.length > 0 && isValidEmail(email.value);
 };
 </script>
 
@@ -86,18 +84,10 @@ const loginFieldsValid = () => {
               class="w-full h-12 rounded bg-gray-925 border border-gray-500 px-4 py-2"
             />
           </div>
-          <div class="flex justify-between items-center">
-            <button
-              type="submit"
-              class="t-btn inline-flex items-center bg-primary disabled:opacity-50"
-              :disabled="!loginFieldsValid()"
-            >
+          <div class="flex justify-center py-6">
+            <button class="btn btn-primary btn-wide" :disabled="!loginFieldsValid()">
               <Loading class="h-5 w-5" v-if="loading" />
-              <font-awesome-icon
-                :icon="['fas', 'sign-in-alt']"
-                class="mr-2"
-                v-else
-              />
+              <font-awesome-icon :icon="['fas', 'sign-in-alt']" class="mr-2" v-else />
               Login
             </button>
             <!-- <h5 class="mr-1">
@@ -107,12 +97,10 @@ const loginFieldsValid = () => {
           </router-link>
         </h5> -->
           </div>
-          <h5 class="mt-5 text-error">
-            <router-link :to="{ name: 'ForgotPassword' }"
-              >Forgot Password?
-            </router-link>
+          <h5 class="mt-5 text-error text-right">
+            <router-link :to="{ name: 'ForgotPassword' }">Forgot Password? </router-link>
           </h5>
-          <div v-if="error !== ''" class="mt-8 p-4 bg-error rounded">
+          <div v-if="error" class="mt-8 p-4 bg-error rounded">
             {{ error }}
           </div>
         </form>

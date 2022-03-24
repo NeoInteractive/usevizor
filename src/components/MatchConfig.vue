@@ -10,8 +10,8 @@ let user = ref(null);
 
 let newMatch = reactive({
   id: nanoid(),
-  heading: "GI Community Halo Invitational",
-  subheading: "Best of 5",
+  heading: "VIZOR Tournament",
+  subheading: "Best of 3",
   status: "Live",
   created_at: db.Timestamp,
   owner: user.uid,

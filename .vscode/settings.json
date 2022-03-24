@@ -1,3 +1,12 @@
 {
-  "cSpell.ignoreWords": ["Abkc", "Knhj"]
+  "cSpell.ignoreWords": ["Abkc", "Knhj"],
+  "vue3snippets.enable-compile-vue-file-on-did-save-code": true,
+  "cSpell.customDictionaries": {
+    "custom-dictionary-workspace": {
+      "name": "custom-dictionary-workspace",
+      "path": "${workspaceFolder:usevizor}/.cspell/custom-dictionary-workspace.txt",
+      "addWords": true,
+      "scope": "workspace"
+    }
+  }
 }

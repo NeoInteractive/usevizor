@@ -5,6 +5,8 @@ import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import Loading from "../Loading.vue";
 
+// TODO: Add "Powered by VIZOR" in a rotation type thing vertical marquee shit - whitelabel with DEV Plan
+
 let route = useRoute();
 let matchData = ref();
 
@@ -16,10 +18,7 @@ const props = defineProps({
 
 const getMatchData = () => {
   const match_id = route.params.id;
-  onSnapshot(
-    doc(db, "matches", match_id),
-    (doc) => (matchData.value = doc.data())
-  );
+  onSnapshot(doc(db, "matches", match_id), (doc) => (matchData.value = doc.data()));
 };
 
 const useLocalData = () => {
@@ -46,7 +45,7 @@ onMounted(() => {
             'bg-gray-200': !matchData.scoreboard.dark,
             'border-gray-200': !matchData.scoreboard.dark,
             'bg-gray-925': matchData.scoreboard.dark,
-            'border-gray-800': matchData.scoreboard.dark,
+            'border-gray-900': matchData.scoreboard.dark,
           }"
         >
           <h2
@@ -70,7 +69,7 @@ onMounted(() => {
             'bg-gray-200': !matchData.scoreboard.dark,
             'border-gray-200': !matchData.scoreboard.dark,
             'bg-gray-925': matchData.scoreboard.dark,
-            'border-gray-800': matchData.scoreboard.dark,
+            'border-gray-900': matchData.scoreboard.dark,
           }"
         >
           <h2
@@ -89,7 +88,7 @@ onMounted(() => {
             :style="`color: ${matchData.team_one.color.text}; background: ${matchData.team_one.color.bg};`"
             :class="{
               'border-gray-200': !matchData.scoreboard.dark,
-              'border-gray-800': matchData.scoreboard.dark,
+              'border-gray-900': matchData.scoreboard.dark,
             }"
           >
             <div class="grid grid-cols-4 grid-rows-1 py-1 px-3">
@@ -110,7 +109,7 @@ onMounted(() => {
               </div>
               <div class="col-span-1">
                 <h2
-                  class="text-shadow-md font-bold text-3xl tracking-wide pt-1 pr-2 text-shadow-lg text-right"
+                  class="text-shadow-md font-bold text-3xl tracking-wide pt-1 text-shadow-lg text-right"
                   :style="`color: ${matchData.team_one.color.text};`"
                 >
                   {{ matchData.team_one.score }}
@@ -123,13 +122,13 @@ onMounted(() => {
             :style="`color: ${matchData.team_two.color.text}; background: ${matchData.team_two.color.bg};`"
             :class="{
               'border-gray-200': !matchData.scoreboard.dark,
-              'border-gray-800': matchData.scoreboard.dark,
+              'border-gray-900': matchData.scoreboard.dark,
             }"
           >
             <div class="grid grid-cols-4 grid-rows-1 py-1 px-3">
               <div class="col-span-1">
                 <h2
-                  class="text-shadow-md font-bold text-3xl tracking-wide pt-1 pl-2 text-shadow-lg"
+                  class="text-shadow-md font-bold text-3xl tracking-wide pt-1 text-shadow-lg"
                   :style="`color: ${matchData.team_two.color.text};`"
                 >
                   {{ matchData.team_two.score }}
@@ -162,7 +161,7 @@ onMounted(() => {
             'bg-gray-200': !matchData.scoreboard.dark,
             'border-gray-200': !matchData.scoreboard.dark,
             'bg-gray-925': matchData.scoreboard.dark,
-            'border-gray-800': matchData.scoreboard.dark,
+            'border-gray-900': matchData.scoreboard.dark,
           }"
         >
           <h2
@@ -188,7 +187,7 @@ onMounted(() => {
             'bg-gray-200': !matchData.scoreboard.dark,
             'border-gray-200': !matchData.scoreboard.dark,
             'bg-gray-925': matchData.scoreboard.dark,
-            'border-gray-800': matchData.scoreboard.dark,
+            'border-gray-900': matchData.scoreboard.dark,
           }"
         >
           <h2

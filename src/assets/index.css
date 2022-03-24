@@ -29,7 +29,7 @@ body {
   @apply text-white font-text;
 }
 :root {
-  background: transparent;
+  background: #010315;
 }
 
 /* Pre configured class */
