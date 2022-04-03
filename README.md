@@ -8,3 +8,5 @@
 VIZOR is a fully dynamic scoreboard that offers tournament admins easy-to-use and customizable scoreboard overlays, with the ability to control from a Web Browser. And soon, using an OBS Dock, or our Stream Deck Plugins.
 
 ![Demo](demo.gif)
+
+![image](https://user-images.githubusercontent.com/11874169/161438824-1b13d318-eec3-4681-8117-24585c138955.png)
