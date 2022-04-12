@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { createPinia } from "pinia";
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
-
+import Particles from "particles.vue3";
 import {
   faBars,
   faEnvelope,
@@ -41,6 +41,7 @@ createApp(App)
   .component("font-awesome-icon", FontAwesomeIcon)
   .use(router)
   .use(pinia)
+  .use(Particles)
   .use(Toast, {
     position: "top-center",
     transition: "Vue-Toastification__fade",

@@ -5,12 +5,11 @@ import createMatch from "../components/home/FreeCTA.vue";
 <template>
   <hero />
   <create-match />
-  <section class="bg-gray-925 py-56 flex justify-center">
+  <section class="bg-gray-925 py-24 flex justify-center">
     <div class="flex justify-between w-3/4 max-w-[100rem]">
       <div class="w-full pr-8">
-        <h1 class="text-white text-2xl text-center pr-3">
-          VIZOR is currently in Open Beta.
-        </h1>
+        <h1 class="text-white text-4xl text-center pr-3">Features</h1>
+        <p class="text-white text-lg text-center">Power to the scoreboard.</p>
       </div>
     </div>
   </section>
